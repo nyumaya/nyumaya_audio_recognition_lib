@@ -38,6 +38,12 @@ cp register.cc ../tensorflow/lite/kernels/
 ../tensorflow/lite/tools/make/download_dependencies.sh 
 ```
 
+- Init kiss_fft
+
+```
+git submodule update --init kissfft/
+```
+
 - Make
 
 ```
