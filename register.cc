@@ -41,7 +41,7 @@ TfLiteRegistration* Register_MAX_POOL_2D();
 TfLiteRegistration* Register_L2_POOL_2D();
 TfLiteRegistration* Register_CONV_2D();
 TfLiteRegistration* Register_DEPTHWISE_CONV_2D();
-TfLiteRegistration* Register_SVDF();
+//TfLiteRegistration* Register_SVDF();
 TfLiteRegistration* Register_RNN();
 TfLiteRegistration* Register_BIDIRECTIONAL_SEQUENCE_RNN();
 TfLiteRegistration* Register_UNIDIRECTIONAL_SEQUENCE_RNN();
@@ -164,7 +164,7 @@ BuiltinOpResolver::BuiltinOpResolver() {
   AddBuiltin(BuiltinOperator_DEPTHWISE_CONV_2D, Register_DEPTHWISE_CONV_2D(),
              /* min_version */ 1,
              /* max_version */ 2);
-  AddBuiltin(BuiltinOperator_SVDF, Register_SVDF());
+  //AddBuiltin(BuiltinOperator_SVDF, Register_SVDF());
   AddBuiltin(BuiltinOperator_RNN, Register_RNN());
   AddBuiltin(BuiltinOperator_BIDIRECTIONAL_SEQUENCE_RNN,
              Register_BIDIRECTIONAL_SEQUENCE_RNN());
