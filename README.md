@@ -1,8 +1,9 @@
 # nyumaya_audio_recognition_lib
 
+**Warning this is still work in progress, especially the CMake file has a hardcoded target for Linux x86/64. Any other platforms will currently not work out of the box and require some tweaking**
 
 
-## Depndencies
+## Depedencies
 -Cmake
 
 ## How to build the library
