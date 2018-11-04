@@ -21,7 +21,7 @@ git checkout 4f2a9acaff04bb81684c2b49c955f296315473ac
 
 
 ```
-git clone git@github.com:nyumaya/nyumaya_audio_recognition_lib.git
+git clone https://github.com/nyumaya/nyumaya_audio_recognition_lib.git
 
 ```
 
