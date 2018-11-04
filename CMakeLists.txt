@@ -8,6 +8,9 @@ set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=x86-64 -mtune=generic -no-pie -funsafe-math-optimizations -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -s")
 
+# PiZero set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -no-pie -funsafe-math-optimizations -s")
+# Pi3    set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -no-pie -funsafe-math-optimizations -mfpu=neon-vfpv4 -DUSE_NEON -s")
+
 set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--as-needed -Wl,--gc-sections -Wl,--exclude-libs,ALL -Wl,--no-export-dynamic")
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
