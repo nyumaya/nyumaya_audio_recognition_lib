@@ -74,6 +74,11 @@ void FeatureExtractor::create_mel_filter()
 	}
 	
 	
+	for(int i = 0; i < (512/2+1) ; i++){
+		for(int j = 0; j < melcount ; j++){
+			mel_filters[i][j] = 0;
+		}
+	}
 
 	for(int i=0; i < this->melcount; ++i){
 
@@ -185,6 +190,7 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 			result[j+this->melcount*i] = log(sum+1e-6);
  		}
 	}
+
 
 	return this->melcount*number_of_frames;
 }
