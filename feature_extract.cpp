@@ -160,7 +160,9 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 
 
 		//Apply Hanning Window
-		float frame[this->datalen] = {0};
+                float frame[this->datalen];
+                memset( frame, 0, this->datalen*sizeof(float) );
+
 		for (int pos = 0 ; pos < this->datalen ; ++pos){
 			if(pos+start < len){
 				frame[pos] = pcm[pos+start] * convert * this->hann[pos];
