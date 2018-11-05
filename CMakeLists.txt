@@ -165,7 +165,11 @@ add_library(nyumaya SHARED ${SOURCES} lib.cpp AudioRecognitionImpl.cpp feature_e
 add_executable(benchmark  ${SOURCES}  ${BENCHMARK_SOURCES})
 
 target_link_libraries(nyumaya Threads::Threads)
-target_link_libraries(nyumaya m  -static-libgcc -static-libstdc++ )
+if(APPLE)
+target_link_libraries(nyumaya m -static-libstdc++ )
+else()
+target_link_libraries(nyumaya m -static-libgcc -static-libstdc++ )
+endif()
 target_link_libraries(nyumaya z)
 
 
