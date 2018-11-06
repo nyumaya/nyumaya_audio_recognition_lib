@@ -147,7 +147,7 @@ void FeatureExtractor::spectrum(const float*const pcm,float*real,float*imag)
 int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len, float*result,float gain)
 {
 
-	const float convert = 1.0/32768.0*gain;
+	const float convert = (1.0/32768.0)*gain;
 
 	size_t number_of_frames = int(len / this->shift);
 
