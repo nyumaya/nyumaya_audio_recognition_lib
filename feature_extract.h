@@ -10,7 +10,7 @@ class FeatureExtractor{
 		FeatureExtractor();
 		~FeatureExtractor();
 
-		int signal_to_mel(const int16_t * const pcm, size_t len,float*result);
+		int signal_to_mel(const int16_t * const pcm, size_t len,float*result,float gain);
 		void spectrum(const float*const pcm,float*real,float*imag);
 		void fft_test();
 		size_t get_melcount();

@@ -158,7 +158,7 @@ void AudioRecognitionImpl::SetThreadCount(size_t val)
 
 int AudioRecognitionImpl::GetFeatures(const int16_t* const data, size_t len,float*result)
 {
-	return f->signal_to_mel(data,len,result);
+	return f->signal_to_mel(data,len,result,gain);
 }
 
 
@@ -182,7 +182,7 @@ int AudioRecognitionImpl::RunDetection(const int16_t* const data,const int array
 	float result[melcount*melframes];
 	float tmp[melcount*melframes];
 
-	int mel_len = f->signal_to_mel(data,array_length,result);
+	int mel_len = f->signal_to_mel(data,array_length,result,gain);
 
 	size_t fs = sizeof(float);
 
@@ -208,7 +208,7 @@ void AudioRecognitionImpl::test()
 	std::cout << std::endl;
 	std::cout << std::endl;
 	
-	int res = f->signal_to_mel(pcmdata,pcmlen,mel);
+	int res = f->signal_to_mel(pcmdata,pcmlen,mel,gain);
 	
 	for(int i = 0 ;i < res ; i++)
 	{
