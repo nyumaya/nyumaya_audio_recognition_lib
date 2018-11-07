@@ -275,6 +275,12 @@ int AudioRecognitionImpl::RunDetection(const int32_t* const data,const int array
 	return 0;
 }
 
+void AudioRecognitionImpl::RemoveDC(bool val)
+{
+	remove_dc = val;
+	f->remove_dc_offset(val);
+}
+
 int AudioRecognitionImpl::smooth_detection(uint8_t*scores,int size)
 {
 	if (cooldown > 0){

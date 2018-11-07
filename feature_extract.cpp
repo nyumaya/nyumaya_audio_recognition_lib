@@ -129,6 +129,10 @@ void FeatureExtractor::create_hanning_window()
 	}
 }
 
+void FeatureExtractor::remove_dc_offset(bool value){
+	remove_dc = value;
+}
+
 
 void FeatureExtractor::spectrum(const float*const pcm,float*real,float*imag)
 {
@@ -149,6 +153,14 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 
 	const float convert = (1.0/32768.0)*gain;
 
+	double max = 0;
+	if (remove_dc){
+		for(int i=0; i < len; ++i){
+			max += pcm[i];
+		}
+	}
+	mean = max/len;
+
 	size_t number_of_frames = int(len / this->shift);
 
 	size_t fft_out_size = (this->nfft/2)+1;
@@ -160,12 +172,12 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 
 
 		//Apply Hanning Window
-                float frame[this->datalen];
-                memset( frame, 0, this->datalen*sizeof(float) );
+		float frame[this->datalen];
+		memset( frame, 0, this->datalen*sizeof(float) );
 
 		for (int pos = 0 ; pos < this->datalen ; ++pos){
 			if(pos+start < len){
-				frame[pos] = pcm[pos+start] * convert * this->hann[pos];
+				frame[pos] = (pcm[pos+start] - mean) * convert * this->hann[pos];
 				
 			} else {
 				frame[pos] = 0*this->hann[pos];

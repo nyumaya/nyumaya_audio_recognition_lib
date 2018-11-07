@@ -14,11 +14,12 @@ class FeatureExtractor{
 		void spectrum(const float*const pcm,float*real,float*imag);
 		void fft_test();
 		size_t get_melcount();
+		void remove_dc_offset(bool value);
 	private:
 
 		void create_mel_filter();
 		void create_hanning_window();
-
+		
 		kiss_fftr_cfg cfg;
 		static const size_t melcount = 40;
 		const size_t sample_rate = 16000;
@@ -29,6 +30,8 @@ class FeatureExtractor{
 		const int lowerf = 20;
 		const int upperf = 8000;
 		float hann[512];
+		float mean = 0;
+		bool remove_dc = false;
 		float mel_filters[512/2+1][melcount];
 
 

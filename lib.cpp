@@ -22,6 +22,11 @@ int RunDetection(AudioRecognitionImpl*impl,const int16_t* const data,const int a
 }
 
 
+void RemoveDC(AudioRecognitionImpl*impl,bool val)
+{
+	impl->RemoveDC(val);
+}
+
 void SetSensitivity(AudioRecognitionImpl*impl,float sens)
 {
 	 impl->SetSensitivity(sens);
@@ -60,6 +65,12 @@ AudioRecognition::AudioRecognition(const std::string& modelPath)
 AudioRecognition::~AudioRecognition()
 {
 	free(mImpl);
+}
+
+
+void AudioRecognition::RemoveDC(bool val)
+{
+	mImpl->RemoveDC(val);
 }
 
 

@@ -40,6 +40,8 @@ class AudioRecognitionImpl {
 		void SetGain(float val);
 
 		void SetThreadCount(size_t val);
+		
+		void RemoveDC(bool val);
 
 		void ProfileRun();
 
@@ -72,7 +74,7 @@ class AudioRecognitionImpl {
 		float melwindow[melcount*melframes];
 
 		std::vector< std::list<float>* > last_frames;
-
+		bool remove_dc;
 		int cooldown = 0;
 		int detection_cooldown = 7;
 		int output_size = 0;
