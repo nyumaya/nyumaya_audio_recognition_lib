@@ -4,35 +4,6 @@
 #include <string>
 
 class AudioRecognitionImpl;
-class AudioRecognition {
-
-	public:
-
-		AudioRecognition(const std::string& modelPath);
-
-		~AudioRecognition();
-
-		int RunDetection(int16_t*data,const int array_length);
-
-		//Set the detection sensitivity between 0-1
-		//0 low sensitivity
-		//1 high sensitivity
-		void SetSensitivity(float sens);
-
-		//Set the volume gain to be applied to the input signal
-		void SetGain(float val);
-		
-		//Remove the DC offset from a microphone signal
-		void RemoveDC(bool val);
-		
-		size_t GetInputDataSize();
-		
-		std::string GetVersionString();
-		
-	private:
-		AudioRecognitionImpl* mImpl;
-};
-
 
 
 

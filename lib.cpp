@@ -56,57 +56,6 @@ const char* GetVersionString(AudioRecognitionImpl*impl)
 }
 
 
-AudioRecognition::AudioRecognition(const std::string& modelPath)
-{
-	mImpl = new AudioRecognitionImpl(modelPath);
-}
-
-
-AudioRecognition::~AudioRecognition()
-{
-	free(mImpl);
-}
-
-
-void AudioRecognition::RemoveDC(bool val)
-{
-	mImpl->RemoveDC(val);
-}
-
-
-int AudioRecognition::RunDetection(int16_t*data,const int array_length)
-{
-	return mImpl->RunDetection(data,array_length);
-}
-
-
-
-size_t AudioRecognition::GetInputDataSize()
-{
-	return mImpl->get_input_data_size();
-}
-
-void AudioRecognition::SetSensitivity(float sens)
-{
-	 mImpl->SetSensitivity(sens);
-}
-
-
-void AudioRecognition::SetGain(float val)
-{
-	mImpl->SetGain(val);
-}
-
-
-std::string AudioRecognition::GetVersionString()
-{
-	return mImpl->GetVersionString();
-}
-
-
-
-
-
 
 
 
