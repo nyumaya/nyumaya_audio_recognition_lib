@@ -74,7 +74,7 @@ void FeatureExtractor::create_mel_filter()
 	}
 	
 	
-	for(int i = 0; i < (512/2+1) ; i++){
+	for(int i = 0; i < (nfft/2+1) ; i++){
 		for(int j = 0; j < melcount ; j++){
 			mel_filters[i][j] = 0;
 		}
@@ -98,11 +98,11 @@ void FeatureExtractor::create_mel_filter()
 
 		int freq = leftfr + 1;
 		while (freq < centerfr){
-			this->mel_filters[freq][i] = (freq - leftfr) * leftslope;
+			mel_filters[freq][i] = (freq - leftfr) * leftslope;
 			freq++; 
 		}
 		if (freq == centerfr){ // This is always true
-			this->mel_filters[freq][i] = height;
+			mel_filters[freq][i] = height;
 			freq++;
 		}
 
@@ -112,7 +112,7 @@ void FeatureExtractor::create_mel_filter()
 	
 	
 		while(freq < rightfr){
-			this->mel_filters[freq][i] = (freq - rightfr) * rightslope;
+			mel_filters[freq][i] = (freq - rightfr) * rightslope;
 			freq++;
 		}
 	}
@@ -125,7 +125,7 @@ void FeatureExtractor::create_hanning_window()
 {
 	for(int n = 0 ; n < this->nfft ; ++n){
 		float val = 0.5-0.5*cos( (2*M_PI*n) / (this->nfft-1) );
-		this->hann[n] = val;
+		hann.push_back(val);
 	}
 }
 
@@ -178,9 +178,8 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 		for (int pos = 0 ; pos < this->datalen ; ++pos){
 			if(pos+start < len){
 				frame[pos] = (pcm[pos+start] - mean) * convert * this->hann[pos];
-				
 			} else {
-				frame[pos] = 0*this->hann[pos];
+				frame[pos] = 0;
 			}
 		}
 

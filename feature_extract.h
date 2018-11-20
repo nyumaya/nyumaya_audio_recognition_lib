@@ -3,7 +3,7 @@
 
 #include "./kissfft/tools/kiss_fftr.h"
 #include <stdint.h>
-
+#include <vector>
 class FeatureExtractor{
 
 	public:
@@ -29,7 +29,7 @@ class FeatureExtractor{
 		const float shift = 0.01*16000;
 		const int lowerf = 20;
 		const int upperf = 8000;
-		float hann[512];
+		std::vector<float> hann;
 		float mean = 0;
 		bool remove_dc = false;
 		float mel_filters[512/2+1][melcount];
