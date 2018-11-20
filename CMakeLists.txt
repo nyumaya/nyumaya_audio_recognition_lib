@@ -12,6 +12,9 @@ set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=x86-64 -mtune=generic -no-pie -funsafe-
 # Pi3    set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -no-pie -funsafe-math-optimizations -mfpu=neon-vfpv4 -DUSE_NEON -s")
 
 set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--as-needed -Wl,--gc-sections -Wl,--exclude-libs,ALL -Wl,--no-export-dynamic")
+if(APPLE)
+  set (CMAKE_SHARED_LINKER_FLAGS "-Wl")
+endif(APPLE)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
