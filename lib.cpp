@@ -1,5 +1,20 @@
 #include "AudioRecognitionImpl.h"
+#include "SpeakerVerificationImpl.h"
+
 #include "lib.h"
+
+
+
+SpeakerVerificationImpl* create_speaker_verification(const char*modelPath)
+{
+	std::string str(modelPath);
+	return new SpeakerVerificationImpl(str);
+}
+
+float* VerifySpeaker(SpeakerVerificationImpl*impl,const int16_t* const data,const int array_length)
+{
+	return impl->VerifySpeaker(data, array_length);
+}
 
 
 AudioRecognitionImpl* create_audio_recognition(const char* modelPath)

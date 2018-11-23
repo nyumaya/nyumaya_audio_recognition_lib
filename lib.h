@@ -4,11 +4,13 @@
 #include <string>
 
 class AudioRecognitionImpl;
-
+class SpeakerVerificationImpl;
 
 
 extern "C"
 {
+
+
 	AudioRecognitionImpl* create_audio_recognition(const char* modelPath);
 	
 	//@param array_length    Number of int16_t samples
@@ -28,6 +30,15 @@ extern "C"
 	size_t GetInputDataSize(AudioRecognitionImpl*impl);
 	
 	const char* GetVersionString(AudioRecognitionImpl*impl);
+	
+	
+	
+	
+	
+	SpeakerVerificationImpl* create_speaker_verification(const char*modelPath);
+
+	float* VerifySpeaker(SpeakerVerificationImpl*impl,const int16_t* const data,const int array_length);
+
 }
 
 
