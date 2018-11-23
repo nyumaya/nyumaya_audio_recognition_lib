@@ -14,7 +14,7 @@
 ```
 git clone https://github.com/tensorflow/tensorflow.git 
 cd tensorflow
-git checkout 4f2a9acaff04bb81684c2b49c955f296315473ac
+git checkout ff2da7862e43aa624ac1f4689ce87eb929df8745 
 ```
 
 - Clone this repository within the top folder of the tensorflow repository
@@ -25,11 +25,10 @@ git clone https://github.com/nyumaya/nyumaya_audio_recognition_lib.git
 
 ```
 
-- Modify two tensorflow files
+- Modify the registered ops
 
 ```
 cd nyumaya_audio_recognition_lib/
-cp download_dependencies.sh ../tensorflow/lite/tools/make/
 cp register.cc ../tensorflow/lite/kernels/
 ```
 

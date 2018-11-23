@@ -63,6 +63,7 @@ Set(SOURCES
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/flatbuffer_conversions.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/op_resolver.cc
 
+		${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/subgraph.cc
 
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/activations.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/add.cc
@@ -163,7 +164,7 @@ Set(SOURCES
 
 
 
-add_library(nyumaya SHARED ${SOURCES} lib.cpp AudioRecognitionImpl.cpp feature_extract.cpp)
+add_library(nyumaya SHARED ${SOURCES} lib.cpp AudioRecognitionImpl.cpp SpeakerVerificationImpl.cpp feature_extract.cpp)
 
 add_executable(benchmark  ${SOURCES}  ${BENCHMARK_SOURCES})
 
