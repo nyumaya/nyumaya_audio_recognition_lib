@@ -1,5 +1,6 @@
 #include "AudioRecognitionImpl.h"
 #include "SpeakerVerificationImpl.h"
+#include "feature_extract.h"
 
 #include "lib.h"
 
@@ -72,6 +73,27 @@ const char* GetVersionString(AudioRecognitionImpl*impl)
 
 
 
+
+FeatureExtractor* create_feature_extractor(size_t nfft,size_t melcount,size_t sample_rate,
+                    size_t lowerf, size_t upperf,float window_len,float shift)
+{
+	return new FeatureExtractor(nfft,melcount,sample_rate,lowerf,upperf,window_len,shift);
+}
+
+int signal_to_mel(FeatureExtractor*impl,const int16_t * const pcm, size_t len,float*result,float gain){
+	return impl->signal_to_mel(pcm,len,result,gain);
+}
+
+
+size_t get_melcount(FeatureExtractor*impl){
+	return impl->get_melcount();
+
+}
+
+void remove_dc_offset(FeatureExtractor*impl,bool value)
+{
+	impl->remove_dc_offset(value);
+}
 
 
 
