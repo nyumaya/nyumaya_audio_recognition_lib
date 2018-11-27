@@ -34,9 +34,16 @@ float melinv(float m){
 	return 700. * (pow(10., m / 2595.) - 1.);
 }
 
-FeatureExtractor::FeatureExtractor()
+FeatureExtractor::FeatureExtractor(size_t nfft,size_t melcount,size_t sample_rate,size_t lowerf , size_t upperf,float window_len,float shift )
 {
-	this->cfg = kiss_fftr_alloc( this->nfft ,false ,0,0 );
+	this->nfft = nfft;
+	this->melcount = melcount;
+	this->sample_rate = sample_rate;
+	this->lowerf = lowerf;
+	this->upperf = upperf;
+	this->shift = shift*sample_rate;
+	this->window_len = window_len;
+	this->cfg = kiss_fftr_alloc(this->nfft ,false ,0,0);
 	this->create_hanning_window();
 	this->create_mel_filter();
 }
@@ -172,10 +179,10 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 
 
 		//Apply Hanning Window
-		float frame[this->datalen];
-		memset( frame, 0, this->datalen*sizeof(float) );
+		float frame[this->nfft];
+		memset( frame, 0, this->nfft*sizeof(float) );
 
-		for (int pos = 0 ; pos < this->datalen ; ++pos){
+		for (int pos = 0 ; pos < this->nfft ; ++pos){
 			if(pos+start < len){
 				frame[pos] = (pcm[pos+start] - mean) * convert * this->hann[pos];
 			} else {

@@ -4,37 +4,38 @@
 #include "./kissfft/tools/kiss_fftr.h"
 #include <stdint.h>
 #include <vector>
-class FeatureExtractor{
+
+class FeatureExtractor {
 
 	public:
-		FeatureExtractor();
+		FeatureExtractor(size_t nfft=512,size_t melcount = 40,size_t sample_rate=16000,size_t lowerf=20, size_t upperf=8000,float window_len=0.03,float shift=0.01);
 		~FeatureExtractor();
 
 		int signal_to_mel(const int16_t * const pcm, size_t len,float*result,float gain);
+		
 		void spectrum(const float*const pcm,float*real,float*imag);
-		void fft_test();
+		
 		size_t get_melcount();
+		
 		void remove_dc_offset(bool value);
+		
 	private:
 
 		void create_mel_filter();
 		void create_hanning_window();
 		
 		kiss_fftr_cfg cfg;
-		static const size_t melcount = 40;
-		const size_t sample_rate = 16000;
-		const size_t nfft = 512;
-		const size_t datalen = 512;
-		const float window_len = 0.03;
-		const float shift = 0.01*16000;
-		const int lowerf = 20;
-		const int upperf = 8000;
+		size_t melcount;
+		size_t sample_rate;
+		size_t nfft;
+		float window_len;
+		float shift;
+		size_t lowerf;
+		size_t upperf;
 		std::vector<float> hann;
 		float mean = 0;
 		bool remove_dc = false;
-		float mel_filters[512/2+1][melcount];
-
-
+		float mel_filters[512/2+1][40];
 };
 
 #endif
