@@ -36,17 +36,12 @@ AudioRecognitionImpl::AudioRecognitionImpl(const std::string& modelPath){
 	switch (interpreter->tensor(inputs[0])->type) {
 		case kTfLiteFloat32:
 			quantized = false;
-
 			break;
 
 		case kTfLiteUInt8:
 			quantized = true;
 			break;
 	}
-
- 	std::vector<int> dims;
-	dims.push_back(1);
-	dims.push_back(melframes*melcount);
 
 	// Allocate tensor buffers.
 	TFLITE_MINIMAL_CHECK(interpreter->AllocateTensors() == kTfLiteOk);
