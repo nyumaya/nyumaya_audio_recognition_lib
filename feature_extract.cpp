@@ -157,6 +157,21 @@ void FeatureExtractor::spectrum(const float*const pcm,float*real,float*imag)
 	}
 }
 
+uint8_t FeatureExtractor::quantize_float(float value)
+{
+	// log(sum+1e-5) has a minimum value of -5. Adding 5 ensures
+	// we are always positive
+	
+	// The value 12 is chosen empirically. In case the input value
+	// would overflow clip the value to 255
+	if( ((value + 5) * 12) > 255){
+		return 255;
+	}
+	
+	uint8_t return_value = (value + 5) * 12;
+	return return_value;
+}
+
 int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len, float*result,float gain)
 {
 
@@ -208,7 +223,7 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 				sum += power_spectrum[k] * mel_filters[k][j];
 			}
 
-			result[j+this->melcount*i] = log(sum+1e-6);
+			result[j+this->melcount*i] = log(sum+1e-5);
  		}
 	}
 
