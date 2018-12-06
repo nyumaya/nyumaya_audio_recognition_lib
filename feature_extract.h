@@ -12,7 +12,7 @@ class FeatureExtractor {
 		FeatureExtractor(size_t nfft=512,size_t melcount = 40,size_t sample_rate=16000,size_t lowerf=20, size_t upperf=8000,float window_len=0.03,float shift=0.01);
 		~FeatureExtractor();
 
-		int signal_to_mel(const int16_t * const pcm, size_t len,float*result,float gain);
+		int signal_to_mel(const int16_t * const pcm, size_t len,uint8_t*result,float gain);
 		
 		void spectrum(const float*const pcm,float*real,float*imag);
 		

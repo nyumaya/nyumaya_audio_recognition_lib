@@ -21,8 +21,6 @@ SpeakerVerificationImpl::SpeakerVerificationImpl(const std::string& modelPath){
 	model = tflite::FlatBufferModel::BuildFromFile(modelPath.c_str());
 	TFLITE_MINIMAL_CHECK(model != nullptr);
 
-	f = new FeatureExtractor();
-
 
 	InterpreterBuilder builder(*model.get(), resolver);
 	builder(&interpreter);
@@ -113,28 +111,12 @@ void SpeakerVerificationImpl::SetThreadCount(size_t val)
 }
 
 
-float* SpeakerVerificationImpl::VerifySpeakerMel(const float* const result,const int mel_len)
+
+float* SpeakerVerificationImpl::VerifySpeaker(const uint8_t* const data,const int mel_length)
 {
 
-	size_t fs = sizeof(float);
-	float tmp[melcount*melframes];
-	
-	memcpy(tmp, melwindow+mel_len, (melcount*melframes-mel_len)*fs);
-	memcpy(tmp + (melcount*melframes-mel_len),result,mel_len*fs);
-	memcpy(melwindow,tmp,melcount*melframes*fs);
-
-	return interpret();
-}
-
-
-float* SpeakerVerificationImpl::VerifySpeaker(const int16_t* const data,const int array_length)
-{
-	float result[melcount*melframes*10];
-
-	int mel_len = f->signal_to_mel(data,array_length,result,1.0);
-
-	size_t fs = sizeof(float);
-	memcpy(melwindow,result,mel_len*fs);
+	size_t fs = sizeof(uint8_t);
+	memcpy(melwindow,data,mel_length*fs);
 	
 	return interpret();
 }
@@ -186,13 +168,6 @@ float* SpeakerVerificationImpl::interpret()
 
 	return 0;
 }
-
-
-float* SpeakerVerificationImpl::VerifySpeaker(const int32_t* const data,const int array_length)
-{
-	return 0;
-}
-
 
 
 size_t SpeakerVerificationImpl::get_input_data_size()

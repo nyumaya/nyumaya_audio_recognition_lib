@@ -172,7 +172,7 @@ uint8_t FeatureExtractor::quantize_float(float value)
 	return return_value;
 }
 
-int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len, float*result,float gain)
+int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len, uint8_t*result,float gain)
 {
 
 	const float convert = (1.0/32768.0)*gain;
@@ -223,7 +223,7 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 				sum += power_spectrum[k] * mel_filters[k][j];
 			}
 
-			result[j+this->melcount*i] = log(sum+1e-5);
+			result[j+this->melcount*i] = quantize_float(log(sum+1e-5));
  		}
 	}
 

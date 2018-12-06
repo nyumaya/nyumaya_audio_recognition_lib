@@ -27,13 +27,7 @@ class SpeakerVerificationImpl {
 
 		~SpeakerVerificationImpl();
 
-		float* VerifySpeaker(const int16_t* const data,const int array_length);
-		
-		float* VerifySpeakerMel(const float* const result,const int mel_len);
-
-		float* VerifySpeaker(const int32_t* const data,const int array_length);
-
-		void SetGain(float val);
+		float* VerifySpeaker(const uint8_t* const data,const int mel_length);
 
 		void SetThreadCount(size_t val);
 		
@@ -52,14 +46,13 @@ class SpeakerVerificationImpl {
 
 		int number_of_threads = 1;
 		bool quantized = false; 
-		FeatureExtractor *f;
+
 		static const size_t melcount = 40;
 		static const size_t melframes = 198;
 		float fingerprint[64];
 
 		float melwindow[melcount*melframes];
 
-		bool remove_dc;
 		int output_size;
 };
 

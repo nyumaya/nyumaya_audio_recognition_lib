@@ -21,9 +21,6 @@ AudioRecognitionImpl::AudioRecognitionImpl(const std::string& modelPath){
 	model = tflite::FlatBufferModel::BuildFromFile(modelPath.c_str());
 	TFLITE_MINIMAL_CHECK(model != nullptr);
 
-	f = new FeatureExtractor();
-
-
 	InterpreterBuilder builder(*model.get(), resolver);
 	builder(&interpreter);
 
@@ -60,7 +57,6 @@ AudioRecognitionImpl::AudioRecognitionImpl(const std::string& modelPath){
 
 AudioRecognitionImpl::~AudioRecognitionImpl(){
 
-	free(f);
 }
 
 void AudioRecognitionImpl::PrintDebug()
@@ -93,8 +89,6 @@ void AudioRecognitionImpl::PrintDebug()
 
 	std::cout << "number of inputs: " << inputs.size() << "\n";
 	std::cout << "number of outputs: " << outputs.size() << "\n";
-
-
 }
 
 
@@ -152,44 +146,20 @@ void AudioRecognitionImpl::SetThreadCount(size_t val)
 }
 
 
-int AudioRecognitionImpl::GetFeatures(const int16_t* const data, size_t len,float*result)
-{
-	return f->signal_to_mel(data,len,result,gain);
-}
-
-
-int AudioRecognitionImpl::RunMelDetection(const float* const result,const int mel_len)
+int AudioRecognitionImpl::RunDetection(const uint8_t* const data,const int mel_length)
 {
 
-	size_t fs = sizeof(float);
-	float tmp[melcount*melframes];
+	size_t fs = sizeof(uint8_t);
+	uint8_t tmp[melcount*melframes];
 	
-	memcpy(tmp, melwindow+mel_len, (melcount*melframes-mel_len)*fs);
-	memcpy(tmp + (melcount*melframes-mel_len),result,mel_len*fs);
+	memcpy(tmp, melwindow+mel_length, (melcount*melframes-mel_length)*fs);
+	memcpy(tmp + (melcount*melframes-mel_length),data,mel_length*fs);
 	memcpy(melwindow,tmp,melcount*melframes*fs);
 
 	return interpret();
 }
 
-
-int AudioRecognitionImpl::RunDetection(const int16_t* const data,const int array_length)
-{
-
-	float result[melcount*melframes];
-	float tmp[melcount*melframes];
-
-	int mel_len = f->signal_to_mel(data,array_length,result,gain);
-
-	size_t fs = sizeof(float);
-
-	memcpy(tmp, melwindow+mel_len, (melcount*melframes-mel_len)*fs);
-	memcpy(tmp + (melcount*melframes-mel_len),result,mel_len*fs);
-	memcpy(melwindow,tmp,melcount*melframes*fs);
-
-	return interpret();
-}
-
-
+/*
 void AudioRecognitionImpl::test()
 {
 	const int pcmlen = 3600;
@@ -229,7 +199,7 @@ void AudioRecognitionImpl::test()
 		std::cout << spectrumr[i] << " j" << spectrumi[i] << std::endl;
 	} 
 	
-}
+}*/
 
 int AudioRecognitionImpl::interpret()
 {
@@ -266,16 +236,7 @@ int AudioRecognitionImpl::interpret()
 }
 
 
-int AudioRecognitionImpl::RunDetection(const int32_t* const data,const int array_length)
-{
-	return 0;
-}
 
-void AudioRecognitionImpl::RemoveDC(bool val)
-{
-	remove_dc = val;
-	f->remove_dc_offset(val);
-}
 
 int AudioRecognitionImpl::smooth_detection(uint8_t*scores,int size)
 {
@@ -374,7 +335,7 @@ int AudioRecognitionImpl::smooth_detection(float*scores,int size)
 	}
 	
 
-	if(biggest_score >  (0.9 + 2.0*sensitivity) && cooldown == 0){
+	if(biggest_score > (0.9 + 2.0*sensitivity) && cooldown == 0){
 		cooldown = detection_cooldown;
 		last_frames[biggest_score_key]->clear();
 		return biggest_score_key;
@@ -400,12 +361,5 @@ void AudioRecognitionImpl::SetSensitivity(float sens)
 	}
 }
 
-
-void AudioRecognitionImpl::SetGain(float val)
-{
-	if(val > 0){
-		this->gain = val;
-	}
-}
 
 
