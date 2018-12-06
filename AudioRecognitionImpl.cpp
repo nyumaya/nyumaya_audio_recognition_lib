@@ -30,19 +30,17 @@ AudioRecognitionImpl::AudioRecognitionImpl(const std::string& modelPath){
 	if(!interpreter){
 		std::cout << "Error creating Interpreter" << std::endl;
 	}
- 
 
 	const std::vector<int> inputs = interpreter->inputs();
 
 	switch (interpreter->tensor(inputs[0])->type) {
 		case kTfLiteFloat32:
 			quantized = false;
-			//std::cout << "Inference Type is Float32" << std::endl;
+
 			break;
 
 		case kTfLiteUInt8:
 			quantized = true;
-			//std::cout << "Inference Type is UInt8" << std::endl;
 			break;
 	}
 
@@ -62,9 +60,6 @@ AudioRecognitionImpl::AudioRecognitionImpl(const std::string& modelPath){
 	for(int i = 0 ; i < output_size ; i++){
 		last_frames.push_back( new std::list<float>);
 	}
-
-	//test();
-	//PrintDebug();
 }
 
 
@@ -76,6 +71,12 @@ AudioRecognitionImpl::~AudioRecognitionImpl(){
 void AudioRecognitionImpl::PrintDebug()
 {
 
+	if(quantized){
+		std::cout << "Inference Type is UInt8" << std::endl;
+	} else {
+		std::cout << "Inference Type is Float32" << std::endl;
+	}
+	
 	std::cout << "tensors size: " << interpreter->tensors_size() << "\n";
 	std::cout << "nodes size: " << interpreter->nodes_size() << "\n";
 	std::cout << "inputs: " << interpreter->inputs().size() << "\n";
