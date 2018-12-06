@@ -81,7 +81,7 @@ void FeatureExtractor::create_mel_filter()
 	}
 	
 	
-	for(int i = 0; i < (nfft/2+1) ; i++){
+	for(int i=0; i < (nfft/2+1) ; i++){
 		for(int j = 0; j < melcount ; j++){
 			mel_filters[i][j] = 0;
 		}
@@ -95,8 +95,8 @@ void FeatureExtractor::create_mel_filter()
 		float fwidth = (rightfr - leftfr) * dfreq;
 		float height = 2. / fwidth;
 
-		float leftslope = 0;
-		float rightslope =0;
+		float leftslope  = 0;
+		float rightslope = 0;
 
 		if (centerfr != leftfr)
 			leftslope = height / (centerfr - leftfr);
@@ -104,10 +104,12 @@ void FeatureExtractor::create_mel_filter()
 			leftslope = 0;
 
 		int freq = leftfr + 1;
+		
 		while (freq < centerfr){
 			mel_filters[freq][i] = (freq - leftfr) * leftslope;
 			freq++; 
 		}
+		
 		if (freq == centerfr){ // This is always true
 			mel_filters[freq][i] = height;
 			freq++;
@@ -165,8 +167,10 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 		for(int i=0; i < len; ++i){
 			max += pcm[i];
 		}
+		
+		mean = max/len;
 	}
-	mean = max/len;
+	
 
 	size_t number_of_frames = int(len / this->shift);
 
@@ -185,8 +189,6 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 		for (int pos = 0 ; pos < this->nfft ; ++pos){
 			if(pos+start < len){
 				frame[pos] = (pcm[pos+start] - mean) * convert * this->hann[pos];
-			} else {
-				frame[pos] = 0;
 			}
 		}
 
@@ -199,7 +201,6 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 			power_spectrum[j] = abs(-(imag*-imag) + real*real);
 		}
 		
-
 		//Apply Mel Scale
 		for(int j=0; j < this->melcount; ++j){
 			float sum = 0;

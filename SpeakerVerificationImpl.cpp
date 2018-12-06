@@ -58,8 +58,7 @@ SpeakerVerificationImpl::SpeakerVerificationImpl(const std::string& modelPath){
 	output_size = output_dims->data[output_dims->size - 1];
 
 	PrintDebug();
-	
-	std::cout << "OutputSize : " << output_size << std::endl;
+
 }
 
 
@@ -130,18 +129,13 @@ float* SpeakerVerificationImpl::VerifySpeakerMel(const float* const result,const
 
 float* SpeakerVerificationImpl::VerifySpeaker(const int16_t* const data,const int array_length)
 {
-
-	std::cout << "AA" << std::endl;
-
 	float result[melcount*melframes*10];
 
 	int mel_len = f->signal_to_mel(data,array_length,result,1.0);
-	
-	std::cout << "BB" << std::endl;
-	
+
 	size_t fs = sizeof(float);
 	memcpy(melwindow,result,mel_len*fs);
-std::cout << "CC" << std::endl;
+	
 	return interpret();
 }
 
@@ -189,8 +183,6 @@ float* SpeakerVerificationImpl::interpret()
 		auto output = interpreter->typed_output_tensor<float>(0);
 		return output;
 	}
-
-	std::cout << "returning" << std::endl;
 
 	return 0;
 }
