@@ -52,14 +52,6 @@ make
 ```
 
 
-## How it works
-
-# The Feature extractor
-The Feature extractor is responsible for turning PCM encoded audio data into 8bit mel-spectrogram features. You might question yourself why the feature extractor is seperate and why it uses only 8bits. Some applications like verifying if a hotword is issued by a certain speaker require two models running the same audio data. Having the feature extractor as seperate entity saves the duplicate computation of the mel features. Secondly it can be a convenient way of compressing and transmitting data. 
-One second of audio contains  40*98 mel features. You can capture your audio on a lightweight system (like ESP32) and transmit the features to a more powerful system. This only requires 40*98*8bit = 3kbit per second.
-
-
-
 ## Credits
 
 
