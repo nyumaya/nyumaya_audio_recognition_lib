@@ -38,8 +38,6 @@ class SpeakerVerificationImpl {
 		void SetThreadCount(size_t val);
 		
 		size_t get_input_data_size();
-		
-		const std::string GetVersionString();
 
 	private:
 	

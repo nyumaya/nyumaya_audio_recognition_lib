@@ -48,8 +48,7 @@ class AudioRecognitionImpl {
 		size_t get_input_data_size();
 		
 		void PrintDebug();
-		
-		const std::string GetVersionString();
+
 
 	private:
 	

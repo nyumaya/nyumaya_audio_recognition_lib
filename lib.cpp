@@ -66,14 +66,6 @@ size_t GetInputDataSize(AudioRecognitionImpl*impl)
 }
 	
 
-const char* GetVersionString(AudioRecognitionImpl*impl)
-{
-	return impl->GetVersionString().c_str();
-}
-
-
-
-
 FeatureExtractor* create_feature_extractor(size_t nfft,size_t melcount,size_t sample_rate,
                     size_t lowerf, size_t upperf,float window_len,float shift)
 {

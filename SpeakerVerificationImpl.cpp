@@ -202,11 +202,6 @@ float* SpeakerVerificationImpl::VerifySpeaker(const int32_t* const data,const in
 }
 
 
-const std::string SpeakerVerificationImpl::GetVersionString()
-{
-	return "0.0.1";
-}
-
 
 size_t SpeakerVerificationImpl::get_input_data_size()
 {

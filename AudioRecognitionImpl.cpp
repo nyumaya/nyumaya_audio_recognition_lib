@@ -333,11 +333,6 @@ int AudioRecognitionImpl::smooth_detection(uint8_t*scores,int size)
 }
 
 
-const std::string AudioRecognitionImpl::GetVersionString()
-{
-	return "0.0.2";
-}
-
 
 // Accumulate scores. Scores are decayed over time. A event is usally 1 second maximum 
 // so after one second of no activity score should be close to zero. 
