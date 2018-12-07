@@ -159,17 +159,17 @@ void FeatureExtractor::spectrum(const float*const pcm,float*real,float*imag)
 
 uint8_t FeatureExtractor::quantize_float(float value)
 {
-	// log(sum+1e-5) has a minimum value of -5. Adding 5 ensures
-	// we are always positive
-	
-	// The value 12 is chosen empirically. In case the input value
-	// would overflow clip the value to 255
-	if( ((value + 5) * 12) > 255){
+	//The values 12 and 8 are determined empirically
+	float converted_value = (value + 12) * 8;
+	if(converted_value > 255){
 		return 255;
 	}
 	
-	uint8_t return_value = (value + 5) * 12;
-	return return_value;
+	if(converted_value < 0){
+		return 0;
+	}
+	
+	return (uint8_t) converted_value;
 }
 
 int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len, uint8_t*result,float gain)
