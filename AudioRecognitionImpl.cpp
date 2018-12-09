@@ -130,11 +130,6 @@ void AudioRecognitionImpl::ProfileRun(){
 	}
 }
 
-uint8_t convert_to_int(float value)
-{
-	uint8_t ret = (value * 6.4) + 128;
-	return ret;
-}
 
 
 void AudioRecognitionImpl::SetThreadCount(size_t val)
@@ -152,54 +147,18 @@ int AudioRecognitionImpl::RunDetection(const uint8_t* const data,const int mel_l
 	size_t fs = sizeof(uint8_t);
 	uint8_t tmp[melcount*melframes];
 	
+	//Copy old content to tmp, the oldest data of size mel_length is discarded
 	memcpy(tmp, melwindow+mel_length, (melcount*melframes-mel_length)*fs);
+	
+	//Copy new mel content to tmp
 	memcpy(tmp + (melcount*melframes-mel_length),data,mel_length*fs);
+	
+	//Copy tmp to melwindow
 	memcpy(melwindow,tmp,melcount*melframes*fs);
 
 	return interpret();
 }
 
-/*
-void AudioRecognitionImpl::test()
-{
-	const int pcmlen = 3600;
-	int16_t pcmdata[pcmlen];
-	
-	float mel[2000];
-	for (int i = 0; i < 3600; i++){
-		pcmdata[i] = (int) (sin(i/100.0)*1600.0);
-
-		std::cout << pcmdata[i] << ",";
-	} 
-	std::cout << std::endl;
-	std::cout << std::endl;
-	
-	int res = f->signal_to_mel(pcmdata,pcmlen,mel,gain);
-	
-	for(int i = 0 ;i < res ; i++)
-	{
-		std::cout << mel[i] << ",";
-	} std::cout << std::endl;
-	
-	std::cout << "Len: " << res << std::endl;
-	
-	
-
-	float signal[512];
-	float spectrumr[512];
-	float spectrumi[512];
-	
-	for (int i = 0; i < 512; i++){
-		signal[i] = (sin(i/100.0)*1600.0);
-	} 
-	
-	f->spectrum(signal,spectrumr,spectrumi);
-	
-	for (int i = 0; i < 512; i++){
-		std::cout << spectrumr[i] << " j" << spectrumi[i] << std::endl;
-	} 
-	
-}*/
 
 int AudioRecognitionImpl::interpret()
 {
@@ -208,14 +167,14 @@ int AudioRecognitionImpl::interpret()
 
 		for(size_t i=0 ; i < melcount*melframes; i++)
 		{
-			input[i] = convert_to_int(melwindow[i]);
+			input[i] = melwindow[i];
 		}
 	} else {
 		auto input = interpreter->typed_input_tensor<float>(0);
 
 		for(size_t i=0 ; i < melcount*melframes; i++)
 		{
-			input[i] = melwindow[i];
+			input[i] = (float) melwindow[i];
 		}
 	}
 
@@ -231,8 +190,6 @@ int AudioRecognitionImpl::interpret()
 		auto output = interpreter->typed_output_tensor<float>(0);
 		return smooth_detection(output,output_size);
 	}
-
-	return 0;
 }
 
 
@@ -255,7 +212,6 @@ int AudioRecognitionImpl::smooth_detection(uint8_t*scores,int size)
 
 	//exclude index 0 which is _unknown_
 	for(int i = 1 ; i < size; ++i){
-		//std::cout << unsigned(scores[i]) << std::endl;
 		if(scores[i] > 200 + 55*sensitivity ){
 			last_frames[i]->push_front(scores[i]);
 		} else {
@@ -350,7 +306,7 @@ size_t AudioRecognitionImpl::get_input_data_size()
 {
 	int blocksize = 20;
 	int frame_shift = 160; 
-	int bitsize = 2;
+	int bitsize = 1;
 	return blocksize*frame_shift*bitsize;
 }
 

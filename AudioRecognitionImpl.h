@@ -59,7 +59,7 @@ class AudioRecognitionImpl {
 		static const size_t melcount = 40;
 		static const size_t melframes = 98;
 		float sensitivity = 0.5;
-		float melwindow[melcount*melframes];
+		uint8_t melwindow[melcount*melframes];
 
 		std::vector< std::list<float>* > last_frames;
 		

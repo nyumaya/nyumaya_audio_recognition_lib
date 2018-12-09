@@ -172,6 +172,7 @@ uint8_t FeatureExtractor::quantize_float(float value)
 	return (uint8_t) converted_value;
 }
 
+
 int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len, uint8_t*result,float gain)
 {
 
