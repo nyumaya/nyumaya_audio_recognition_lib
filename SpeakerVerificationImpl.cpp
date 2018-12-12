@@ -95,13 +95,6 @@ void SpeakerVerificationImpl::PrintDebug()
 }
 
 
-uint8_t SpeakerVerificationImpl::convert_to_int(float value)
-{
-	uint8_t ret = (value * 6.4) + 128;
-	return ret;
-}
-
-
 void SpeakerVerificationImpl::SetThreadCount(size_t val)
 {
 	number_of_threads = val;
@@ -112,7 +105,7 @@ void SpeakerVerificationImpl::SetThreadCount(size_t val)
 
 
 
-float* SpeakerVerificationImpl::VerifySpeaker(const uint8_t* const data,const int mel_length)
+uint8_t* SpeakerVerificationImpl::VerifySpeaker(const uint8_t* const data,const int mel_length)
 {
 
 	size_t fs = sizeof(uint8_t);
@@ -123,15 +116,14 @@ float* SpeakerVerificationImpl::VerifySpeaker(const uint8_t* const data,const in
 
 
 
-float* SpeakerVerificationImpl::interpret()
+uint8_t* SpeakerVerificationImpl::interpret()
 {
-
 	if(quantized){
 		auto input = interpreter->typed_input_tensor<uint8_t>(0);
 
 		for(size_t i=0 ; i < melcount*melframes; i++)
 		{
-			input[i] = convert_to_int(melwindow[i]);
+			input[i] = melwindow[i];
 		}
 
 	} else {
@@ -139,7 +131,7 @@ float* SpeakerVerificationImpl::interpret()
 
 		for(size_t i=0 ; i < melcount*melframes; i++)
 		{
-			input[i] = melwindow[i];
+			input[i] = (float)melwindow[i];
 		}
 	}
 
@@ -150,20 +142,20 @@ float* SpeakerVerificationImpl::interpret()
 	
 
 	//FIXME: output_size seems to get overwritten
-	int outputs = 128;
+	int outputs = 512;
 	if(quantized){
 		std::cout << "Output Size: " << output_size << std::endl;
 		auto output = interpreter->typed_output_tensor<uint8_t>(0);
 
 		for (int i = 0 ; i < outputs ; i++){
-			fingerprint[i] = output[i] - 128;
+			fingerprint[i] = output[i];
 		}
 		
 		return fingerprint;
 	} else {
 		std::cout << "WARNING NOT QUANTIZED" << std::endl;
-		auto output = interpreter->typed_output_tensor<float>(0);
-		return output;
+		//auto output = interpreter->typed_output_tensor<float>(0);
+		return NULL;
 	}
 
 	return 0;

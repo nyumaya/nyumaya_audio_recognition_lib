@@ -27,7 +27,7 @@ class SpeakerVerificationImpl {
 
 		~SpeakerVerificationImpl();
 
-		float* VerifySpeaker(const uint8_t* const data,const int mel_length);
+		uint8_t* VerifySpeaker(const uint8_t* const data,const int mel_length);
 
 		void SetThreadCount(size_t val);
 		
@@ -35,10 +35,8 @@ class SpeakerVerificationImpl {
 
 	private:
 	
-		float* interpret();
+		uint8_t* interpret();
 		void PrintDebug();
-
-		uint8_t convert_to_int(float value);
 
 		std::unique_ptr<tflite::Interpreter> interpreter;
 		std::unique_ptr<tflite::FlatBufferModel> model;
@@ -49,9 +47,9 @@ class SpeakerVerificationImpl {
 
 		static const size_t melcount = 40;
 		static const size_t melframes = 198;
-		float fingerprint[64];
+		uint8_t fingerprint[512];
 
-		float melwindow[melcount*melframes];
+		uint8_t melwindow[melcount*melframes];
 
 		int output_size;
 };

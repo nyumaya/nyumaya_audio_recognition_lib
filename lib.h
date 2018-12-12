@@ -12,8 +12,8 @@ extern "C"
 	//Audio Recognition
 	AudioRecognitionImpl* create_audio_recognition(const char* modelPath);
 	
-	//@param array_length    Number of int16_t samples
-	//@param data            Signed int16 pcm data
+	//@param array_length    Number of mel features
+	//@param data            Signed uint8_t mel features
 	int RunDetection(AudioRecognitionImpl*impl,const uint8_t* const data,const int mel_length); 
 	
 	void SetSensitivity(AudioRecognitionImpl*impl,float sens);
@@ -24,8 +24,7 @@ extern "C"
 	//Speaker Verification
 	SpeakerVerificationImpl* create_speaker_verification(const char*modelPath);
 
-	float* VerifySpeaker(SpeakerVerificationImpl*impl,const int16_t* const data,const int array_length);
-	
+	uint8_t* VerifySpeaker(SpeakerVerificationImpl*impl,const uint8_t* const data,const int array_length);
 	
 	
 	//Feature Extractor

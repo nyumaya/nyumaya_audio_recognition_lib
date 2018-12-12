@@ -12,7 +12,7 @@ SpeakerVerificationImpl* create_speaker_verification(const char*modelPath)
 	return new SpeakerVerificationImpl(str);
 }
 
-float* VerifySpeaker(SpeakerVerificationImpl*impl,const uint8_t* const data,const int mel_length)
+uint8_t* VerifySpeaker(SpeakerVerificationImpl*impl,const uint8_t* const data,const int mel_length)
 {
 	return impl->VerifySpeaker(data, mel_length);
 }
