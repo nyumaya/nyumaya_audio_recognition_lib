@@ -31,13 +31,12 @@ AudioRecognitionImpl::AudioRecognitionImpl(const std::string& modelPath){
 	const std::vector<int> inputs = interpreter->inputs();
 
 	switch (interpreter->tensor(inputs[0])->type) {
-		case kTfLiteFloat32:
-			quantized = false;
-			break;
 
 		case kTfLiteUInt8:
 			quantized = true;
 			break;
+		default:
+			std::cerr << "Model type not compatible. Only 8bit quantized models are compatible" << std::endl;
 	}
 
 	// Allocate tensor buffers.
@@ -181,15 +180,8 @@ void AudioRecognitionImpl::_interpret(const uint8_t* const data,const int mel_le
 		{
 			input[i] = melwindow[i];
 		}
-	} else {
-		auto input = interpreter->typed_input_tensor<float>(0);
-
-		for(size_t i=0 ; i < melcount*melframes; i++)
-		{
-			input[i] = (float) melwindow[i];
-		}
 	}
-	
+
 	// Run inference 
 	if (interpreter->Invoke() != kTfLiteOk) {
 		std::cerr << "Failed to invoke tflite!" << std::endl;
@@ -203,10 +195,7 @@ int AudioRecognitionImpl::smooth()
 	if(quantized){
 		auto output = interpreter->typed_output_tensor<uint8_t>(0);
 		return smooth_detection(output,output_size);
-	} else {
-		auto output = interpreter->typed_output_tensor<float>(0);
-		return smooth_detection(output,output_size);
-	}
+	} 
 }
 
 
