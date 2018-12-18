@@ -53,7 +53,6 @@ class AudioRecognitionImpl {
 		std::unique_ptr<tflite::FlatBufferModel> model;
 		tflite::ops::builtin::BuiltinOpResolver resolver;
 
-		int smooth_detection(float*scores,int size);
 		int smooth_detection(uint8_t*scores,int size);
 
 		int number_of_threads = 1;

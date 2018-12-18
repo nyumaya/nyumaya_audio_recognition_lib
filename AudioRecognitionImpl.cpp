@@ -196,6 +196,8 @@ void AudioRecognitionImpl::_interpret(const uint8_t* const data,const int mel_le
 	}
 
 }
+
+
 int AudioRecognitionImpl::smooth()
 {
 	if(quantized){
@@ -209,7 +211,9 @@ int AudioRecognitionImpl::smooth()
 
 
 
-
+// Accumulate scores. Scores are decayed over time. A event is usally 1 second maximum 
+// so after one second of no activity score should be close to zero. 
+// Maximum one prediction every n frames.
 int AudioRecognitionImpl::smooth_detection(uint8_t*scores,int size)
 {
 	if (cooldown > 0){
@@ -259,62 +263,6 @@ int AudioRecognitionImpl::smooth_detection(uint8_t*scores,int size)
 
 	return 0;
 }
-
-
-
-// Accumulate scores. Scores are decayed over time. A event is usally 1 second maximum 
-// so after one second of no activity score should be close to zero. 
-// Maximum one prediction every n frames.
-int AudioRecognitionImpl::smooth_detection(float*scores,int size)
-{
-		
-	if (cooldown > 0){
-		cooldown --;
-	}
-
-	//Moving window, max 5 elements
-	for (auto& frame : last_frames)
-	{
-		if (frame->size() >= 5){
-			frame->pop_back();
-		}
-	}
-
-
-	//exclude index 0 which is _unknown_
-	for(int i = 1 ; i < size; ++i){
-		if(scores[i] > 0.85 +0.149999*sensitivity ){
-			last_frames[i]->push_front(scores[i]);
-		} else {
-			last_frames[i]->push_front(0);
-		}
-	}
-
-
-	float biggest_score = 0;
-	int biggest_score_key = 0;
-	int key = 0;
-	for (auto& frame : last_frames)
-	{
-		//Check if the biggest score in last frames is over the threshold
-		float score = std::accumulate(std::begin(*frame), std::end(*frame), 0.0);
-		if(score > biggest_score){
-			biggest_score = score;
-			biggest_score_key = key;
-		}
-		key ++;
-	}
-	
-
-	if(biggest_score > (0.9 + 2.0*sensitivity) && cooldown == 0){
-		cooldown = detection_cooldown;
-		last_frames[biggest_score_key]->clear();
-		return biggest_score_key;
-	}
-
-	return 0;
-}
-
 
 
 size_t AudioRecognitionImpl::get_input_data_size()
