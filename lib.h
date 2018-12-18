@@ -12,15 +12,21 @@ extern "C"
 	//Audio Recognition
 	AudioRecognitionImpl* create_audio_recognition(const char* modelPath);
 	
+	
+	//Input Mel Features and get the index of the detected label if recognized
 	//@param array_length    Number of mel features
 	//@param data            Signed uint8_t mel features
 	int RunDetection(AudioRecognitionImpl*impl,const uint8_t* const data,const int mel_length); 
+	
+	
+	//Input Mel Features and get the raw probabilities of the labels
+	uint8_t*RunRawDetection(AudioRecognitionImpl*impl,const uint8_t* const data,const int mel_length);
+
 	
 	void SetSensitivity(AudioRecognitionImpl*impl,float sens);
  	
 	size_t GetInputDataSize(AudioRecognitionImpl*impl);
 	
-
 	//Speaker Verification
 	SpeakerVerificationImpl* create_speaker_verification(const char*modelPath);
 

@@ -143,7 +143,24 @@ void AudioRecognitionImpl::SetThreadCount(size_t val)
 
 int AudioRecognitionImpl::RunDetection(const uint8_t* const data,const int mel_length)
 {
+	_interpret(data,mel_length);
+	return smooth();
+}
 
+uint8_t* AudioRecognitionImpl::RunRawDetection(const uint8_t* const data,const int mel_length)
+{
+	_interpret(data,mel_length);
+	
+	if(quantized){
+		return interpreter->typed_output_tensor<uint8_t>(0);
+	}
+	
+	return 0;
+}
+
+
+void AudioRecognitionImpl::_interpret(const uint8_t* const data,const int mel_length)
+{
 	size_t fs = sizeof(uint8_t);
 	uint8_t tmp[melcount*melframes];
 	
@@ -155,13 +172,8 @@ int AudioRecognitionImpl::RunDetection(const uint8_t* const data,const int mel_l
 	
 	//Copy tmp to melwindow
 	memcpy(melwindow,tmp,melcount*melframes*fs);
-
-	return interpret();
-}
-
-
-int AudioRecognitionImpl::interpret()
-{
+	
+	
 	if(quantized){
 		auto input = interpreter->typed_input_tensor<uint8_t>(0);
 
@@ -177,12 +189,15 @@ int AudioRecognitionImpl::interpret()
 			input[i] = (float) melwindow[i];
 		}
 	}
-
+	
 	// Run inference 
 	if (interpreter->Invoke() != kTfLiteOk) {
 		std::cerr << "Failed to invoke tflite!" << std::endl;
 	}
 
+}
+int AudioRecognitionImpl::smooth()
+{
 	if(quantized){
 		auto output = interpreter->typed_output_tensor<uint8_t>(0);
 		return smooth_detection(output,output_size);

@@ -30,6 +30,10 @@ int RunDetection(AudioRecognitionImpl*impl,const uint8_t* const data,const int m
 	return impl->RunDetection(data,mel_length);
 }
 
+uint8_t*RunRawDetection(AudioRecognitionImpl*impl,const uint8_t* const data,const int mel_length)
+{
+	return impl->RunRawDetection(data,mel_length);
+}
 
 void SetSensitivity(AudioRecognitionImpl*impl,float sens)
 {

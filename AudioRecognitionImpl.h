@@ -28,6 +28,8 @@ class AudioRecognitionImpl {
 		~AudioRecognitionImpl();
 
 		int RunDetection(const uint8_t* const data,const int mel_length);
+		
+		uint8_t*RunRawDetection(const uint8_t* const data,const int mel_length);
 
 		void SetSensitivity(float sens);
 
@@ -42,7 +44,8 @@ class AudioRecognitionImpl {
 
 	private:
 	
-		int interpret();
+		int smooth();
+		void _interpret(const uint8_t* const data,const int mel_length);
 		
 		void test();
 
