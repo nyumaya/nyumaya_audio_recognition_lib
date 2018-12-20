@@ -18,8 +18,6 @@ class FeatureExtractor {
 		
 		size_t get_melcount();
 		
-		void remove_dc_offset(bool value);
-		
 		uint8_t quantize_float(float value);
 		
 	private:

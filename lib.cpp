@@ -63,10 +63,6 @@ size_t get_melcount(FeatureExtractor*impl){
 
 }
 
-void remove_dc_offset(FeatureExtractor*impl,bool value)
-{
-	impl->remove_dc_offset(value);
-}
 
 
 
