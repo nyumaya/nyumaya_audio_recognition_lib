@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-
+#include <cmath>
 /* 
 
 Mel Filter creation is based on Sphinx-III 
@@ -34,19 +34,15 @@ float melinv(float m){
 	return 700. * (pow(10., m / 2595.) - 1.);
 }
 
-FeatureExtractor::FeatureExtractor(size_t nfft,size_t melcount,size_t sample_rate,size_t lowerf , size_t upperf,float window_len,float shift )
+FeatureExtractor::FeatureExtractor(size_t nfft,size_t melcount,size_t sample_rate,size_t lowerf , size_t upperf,float window_len,float shift ) :
+	nfft(nfft),melcount(melcount),sample_rate(sample_rate),lowerf(lowerf),upperf(upperf),shift(shift*sample_rate),window_len(window_len)
 {
-	this->nfft = nfft;
-	this->melcount = melcount;
-	this->sample_rate = sample_rate;
-	this->lowerf = lowerf;
-	this->upperf = upperf;
-	this->shift = shift*sample_rate;
-	this->window_len = window_len;
+
 	this->cfg = kiss_fftr_alloc(this->nfft ,false ,0,0);
 	this->create_hanning_window();
 	this->create_mel_filter();
 }
+
 
 FeatureExtractor::~FeatureExtractor()
 {
@@ -75,19 +71,19 @@ void FeatureExtractor::create_mel_filter()
 	std::vector<float> filter_edge;
 
 
-	for(int i=0; i < this->melcount+2; ++i){
+	for(size_t i=0; i < this->melcount+2; ++i){
 		float edge = melinv(melmin + dmelbw * i);
 		filter_edge.push_back(edge);
 	}
 	
 	
-	for(int i=0; i < (nfft/2+1) ; i++){
-		for(int j = 0; j < melcount ; j++){
+	for(size_t i=0; i < (nfft/2+1) ; i++){
+		for(size_t j = 0; j < melcount ; j++){
 			mel_filters[i][j] = 0;
 		}
 	}
 
-	for(int i=0; i < this->melcount; ++i){
+	for(size_t i=0; i < this->melcount; ++i){
 
 		int leftfr = round(filter_edge[i] / dfreq);
 		int centerfr = round(filter_edge[i + 1] / dfreq);
@@ -132,7 +128,7 @@ void FeatureExtractor::create_mel_filter()
 
 void FeatureExtractor::create_hanning_window()
 {
-	for(int n = 0 ; n < this->nfft ; ++n){
+	for(size_t n = 0 ; n < this->nfft ; ++n){
 		float val = 0.5-0.5*cos( (2*M_PI*n) / (this->nfft-1) );
 		hann.push_back(val);
 	}
@@ -148,7 +144,7 @@ void FeatureExtractor::spectrum(const float*const pcm,float*real,float*imag)
 	kiss_fft_cpx fft_result[fft_out_size];
 
 	kiss_fftr(this->cfg,pcm,fft_result); 
-	for (int i = 0; i < fft_out_size ; i++){
+	for (size_t i = 0; i < fft_out_size ; i++){
 		real[i] = fft_result[i].r;
 		imag[i] = fft_result[i].i;
 	}
@@ -183,13 +179,11 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 		
 	mean = max/len;
 
-	
-	size_t number_of_frames = int(len / this->shift);
+	const size_t number_of_frames = int(len / this->shift);
+	const size_t fft_out_size = (this->nfft/2)+1;
 
-	size_t fft_out_size = (this->nfft/2)+1;
-
-	for(int i=0; i < number_of_frames; ++i){
-		int start = i*this->shift;
+	for(size_t i=0; i < number_of_frames; ++i){
+		const int start = i*this->shift;
 		kiss_fft_cpx fft_result[fft_out_size];
 		float power_spectrum[this->nfft];
 
@@ -198,7 +192,7 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 		float frame[this->nfft];
 		memset( frame, 0, this->nfft*sizeof(float) );
 
-		for (int pos = 0 ; pos < this->nfft ; ++pos){
+		for (size_t pos = 0 ; pos < this->nfft ; ++pos){
 			if(pos+start < len){
 				frame[pos] = (pcm[pos+start] - mean) * convert * this->hann[pos];
 			}
@@ -207,16 +201,16 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 		kiss_fftr(this->cfg,frame,fft_result); 
 
 		//Power Spectrum
-		for(int j=0; j < fft_out_size; ++j){
+		for(size_t j=0; j < fft_out_size; ++j){
 			float imag = fft_result[j].i;
 			float real = fft_result[j].r;
 			power_spectrum[j] = abs(-(imag*-imag) + real*real);
 		}
 		
 		//Apply Mel Scale
-		for(int j=0; j < this->melcount; ++j){
+		for(size_t j=0; j < this->melcount; ++j){
 			float sum = 0;
-			for (int k = 0 ; k < fft_out_size; k++){
+			for (size_t k = 0 ; k < fft_out_size; k++){
 				sum += power_spectrum[k] * mel_filters[k][j];
 			}
 
