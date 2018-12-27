@@ -20,7 +20,6 @@ matrix:
       env:
         - MATRIX_EVAL="brew update"
         
-  allow_failures:
     - os: windows
       env:
         - MATRIX_EVAL=""
