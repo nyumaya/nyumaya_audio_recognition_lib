@@ -1,0 +1,15 @@
+language: cpp
+
+
+before_script:
+    - git clone https://github.com/tensorflow/tensorflow.git 
+    - cd tensorflow
+    - git checkout 2a240b1d1319842bf360bf08d7fc5cb8458bbb0a 
+
+
+script: 
+    - cp register.cc ../tensorflow/lite/kernels/
+    - ../tensorflow/lite/tools/make/download_dependencies.sh
+    - git submodule update --init kissfft/
+    - cmake ./
+    - make 
