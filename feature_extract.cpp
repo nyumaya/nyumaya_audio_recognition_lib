@@ -177,7 +177,7 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 		max += pcm[i];
 	}
 		
-	mean = max/len;
+	const float mean = max/len;
 
 	const size_t number_of_frames = int(len / this->shift);
 	const size_t fft_out_size = (this->nfft/2)+1;
