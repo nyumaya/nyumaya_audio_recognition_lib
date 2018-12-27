@@ -5,8 +5,6 @@ before_script:
     - git clone https://github.com/tensorflow/tensorflow.git 
     - cd tensorflow
     - git checkout 2a240b1d1319842bf360bf08d7fc5cb8458bbb0a 
-    - cd ../
-
 
 script: 
     - git clone https://github.com/nyumaya/nyumaya_audio_recognition_lib.git
