@@ -27,33 +27,25 @@ class AudioRecognitionImpl {
 
 		~AudioRecognitionImpl();
 
-		int RunDetection(const int16_t* const data,const int array_length);
+		int RunDetection(const uint8_t* const data,const int mel_length);
 		
-		int RunMelDetection(const float* const result,const int mel_len);
-		
-		int GetFeatures(const int16_t* const data, size_t len,float*result);
-
-		int RunDetection(const int32_t* const data,const int array_length);
+		uint8_t*RunRawDetection(const uint8_t* const data,const int mel_length);
 
 		void SetSensitivity(float sens);
 
-		void SetGain(float val);
-
 		void SetThreadCount(size_t val);
-		
-		void RemoveDC(bool val);
 
 		void ProfileRun();
 
 		size_t get_input_data_size();
 		
 		void PrintDebug();
-		
-		const std::string GetVersionString();
+
 
 	private:
 	
-		int interpret();
+		int smooth();
+		void _interpret(const uint8_t* const data,const int mel_length);
 		
 		void test();
 
@@ -61,7 +53,6 @@ class AudioRecognitionImpl {
 		std::unique_ptr<tflite::FlatBufferModel> model;
 		tflite::ops::builtin::BuiltinOpResolver resolver;
 
-		int smooth_detection(float*scores,int size);
 		int smooth_detection(uint8_t*scores,int size);
 
 		int number_of_threads = 1;
@@ -70,11 +61,10 @@ class AudioRecognitionImpl {
 		static const size_t melcount = 40;
 		static const size_t melframes = 98;
 		float sensitivity = 0.5;
-		float gain = 1.0;
-		float melwindow[melcount*melframes];
+		uint8_t melwindow[melcount*melframes];
 
 		std::vector< std::list<float>* > last_frames;
-		bool remove_dc;
+		
 		int cooldown = 0;
 		int detection_cooldown = 7;
 		int output_size = 0;

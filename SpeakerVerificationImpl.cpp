@@ -21,8 +21,6 @@ SpeakerVerificationImpl::SpeakerVerificationImpl(const std::string& modelPath){
 	model = tflite::FlatBufferModel::BuildFromFile(modelPath.c_str());
 	TFLITE_MINIMAL_CHECK(model != nullptr);
 
-	f = new FeatureExtractor();
-
 
 	InterpreterBuilder builder(*model.get(), resolver);
 	builder(&interpreter);
@@ -58,8 +56,7 @@ SpeakerVerificationImpl::SpeakerVerificationImpl(const std::string& modelPath){
 	output_size = output_dims->data[output_dims->size - 1];
 
 	PrintDebug();
-	
-	std::cout << "OutputSize : " << output_size << std::endl;
+
 }
 
 
@@ -98,13 +95,6 @@ void SpeakerVerificationImpl::PrintDebug()
 }
 
 
-uint8_t SpeakerVerificationImpl::convert_to_int(float value)
-{
-	uint8_t ret = (value * 6.4) + 128;
-	return ret;
-}
-
-
 void SpeakerVerificationImpl::SetThreadCount(size_t val)
 {
 	number_of_threads = val;
@@ -114,48 +104,26 @@ void SpeakerVerificationImpl::SetThreadCount(size_t val)
 }
 
 
-float* SpeakerVerificationImpl::VerifySpeakerMel(const float* const result,const int mel_len)
+
+uint8_t* SpeakerVerificationImpl::VerifySpeaker(const uint8_t* const data,const int mel_length)
 {
 
-	size_t fs = sizeof(float);
-	float tmp[melcount*melframes];
+	size_t fs = sizeof(uint8_t);
+	memcpy(melwindow,data,mel_length*fs);
 	
-	memcpy(tmp, melwindow+mel_len, (melcount*melframes-mel_len)*fs);
-	memcpy(tmp + (melcount*melframes-mel_len),result,mel_len*fs);
-	memcpy(melwindow,tmp,melcount*melframes*fs);
-
-	return interpret();
-}
-
-
-float* SpeakerVerificationImpl::VerifySpeaker(const int16_t* const data,const int array_length)
-{
-
-	std::cout << "AA" << std::endl;
-
-	float result[melcount*melframes*10];
-
-	int mel_len = f->signal_to_mel(data,array_length,result,1.0);
-	
-	std::cout << "BB" << std::endl;
-	
-	size_t fs = sizeof(float);
-	memcpy(melwindow,result,mel_len*fs);
-std::cout << "CC" << std::endl;
 	return interpret();
 }
 
 
 
-float* SpeakerVerificationImpl::interpret()
+uint8_t* SpeakerVerificationImpl::interpret()
 {
-
 	if(quantized){
 		auto input = interpreter->typed_input_tensor<uint8_t>(0);
 
 		for(size_t i=0 ; i < melcount*melframes; i++)
 		{
-			input[i] = convert_to_int(melwindow[i]);
+			input[i] = melwindow[i];
 		}
 
 	} else {
@@ -163,7 +131,7 @@ float* SpeakerVerificationImpl::interpret()
 
 		for(size_t i=0 ; i < melcount*melframes; i++)
 		{
-			input[i] = melwindow[i];
+			input[i] = (float)melwindow[i];
 		}
 	}
 
@@ -174,37 +142,23 @@ float* SpeakerVerificationImpl::interpret()
 	
 
 	//FIXME: output_size seems to get overwritten
-	int outputs = 128;
+	int outputs = 512;
 	if(quantized){
 		std::cout << "Output Size: " << output_size << std::endl;
 		auto output = interpreter->typed_output_tensor<uint8_t>(0);
 
 		for (int i = 0 ; i < outputs ; i++){
-			fingerprint[i] = output[i] - 128;
+			fingerprint[i] = output[i];
 		}
 		
 		return fingerprint;
 	} else {
 		std::cout << "WARNING NOT QUANTIZED" << std::endl;
-		auto output = interpreter->typed_output_tensor<float>(0);
-		return output;
+		//auto output = interpreter->typed_output_tensor<float>(0);
+		return NULL;
 	}
 
-	std::cout << "returning" << std::endl;
-
 	return 0;
-}
-
-
-float* SpeakerVerificationImpl::VerifySpeaker(const int32_t* const data,const int array_length)
-{
-	return 0;
-}
-
-
-const std::string SpeakerVerificationImpl::GetVersionString()
-{
-	return "0.0.1";
 }
 
 

@@ -1,0 +1,30 @@
+language: cpp
+
+
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+
+    - os: osx
+      osx_image: xcode10.1
+    
+    - os: osx
+      osx_image: xcode9.4
+      
+    - os: windows
+
+
+before_script:
+    - git clone https://github.com/tensorflow/tensorflow.git 
+    - cd tensorflow
+    - git checkout 2a240b1d1319842bf360bf08d7fc5cb8458bbb0a 
+
+script: 
+    - git clone https://github.com/nyumaya/nyumaya_audio_recognition_lib.git
+    - cd nyumaya_audio_recognition_lib/
+    - cp register.cc ../tensorflow/lite/kernels/
+    - ../tensorflow/lite/tools/make/download_dependencies.sh
+    - git submodule update --init kissfft/
+    - cmake ./
+    - make 

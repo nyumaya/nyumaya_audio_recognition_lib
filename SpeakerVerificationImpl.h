@@ -27,26 +27,16 @@ class SpeakerVerificationImpl {
 
 		~SpeakerVerificationImpl();
 
-		float* VerifySpeaker(const int16_t* const data,const int array_length);
-		
-		float* VerifySpeakerMel(const float* const result,const int mel_len);
-
-		float* VerifySpeaker(const int32_t* const data,const int array_length);
-
-		void SetGain(float val);
+		uint8_t* VerifySpeaker(const uint8_t* const data,const int mel_length);
 
 		void SetThreadCount(size_t val);
 		
 		size_t get_input_data_size();
-		
-		const std::string GetVersionString();
 
 	private:
 	
-		float* interpret();
+		uint8_t* interpret();
 		void PrintDebug();
-
-		uint8_t convert_to_int(float value);
 
 		std::unique_ptr<tflite::Interpreter> interpreter;
 		std::unique_ptr<tflite::FlatBufferModel> model;
@@ -54,14 +44,13 @@ class SpeakerVerificationImpl {
 
 		int number_of_threads = 1;
 		bool quantized = false; 
-		FeatureExtractor *f;
+
 		static const size_t melcount = 40;
 		static const size_t melframes = 198;
-		float fingerprint[64];
+		uint8_t fingerprint[512];
 
-		float melwindow[melcount*melframes];
+		uint8_t melwindow[melcount*melframes];
 
-		bool remove_dc;
 		int output_size;
 };
 

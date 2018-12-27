@@ -1,5 +1,7 @@
 # nyumaya_audio_recognition_lib
 
+[![Build Status](https://travis-ci.org/nyumaya/nyumaya_audio_recognition_lib.svg?branch=V0.3)](https://travis-ci.org/nyumaya/nyumaya_audio_recognition_lib)
+
 **Warning this is still work in progress, especially the CMake file has a hardcoded target for Linux x86/64. Any other platforms will currently not work out of the box and require some tweaking**
 
 
@@ -50,7 +52,6 @@ git submodule update --init kissfft/
 cmake ./
 make 
 ```
-
 
 ## Credits
 

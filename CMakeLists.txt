@@ -4,9 +4,7 @@ project (nyumaya)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Release)
-
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=x86-64 -mtune=generic -no-pie -funsafe-math-optimizations -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -s")
+set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=x86-64 -mtune=generic -fPIC -funsafe-math-optimizations -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -s")
 
 # PiZero set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -no-pie -funsafe-math-optimizations -s")
 # Pi3    set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -no-pie -funsafe-math-optimizations -mfpu=neon-vfpv4 -DUSE_NEON -s")
