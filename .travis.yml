@@ -36,5 +36,6 @@ deploy:
     file_glob: true
     file: libnyumaya*
     skip_cleanup: true
+    draft: true
     on:
         tags: true
