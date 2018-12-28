@@ -8,10 +8,10 @@ matrix:
 
     - os: osx
       osx_image: xcode10.1
-    
+
     - os: osx
       osx_image: xcode9.4
-      
+
   allow_failures:
     - os: windows
 
@@ -29,3 +29,12 @@ script:
     - git submodule update --init kissfft/
     - cmake ./
     - make 
+    
+deploy:
+    provider: releases
+    api_key: $GITHUB_TOKEN
+    file_glob: true
+    file: libnyumaya*
+    skip_cleanup: true
+    on:
+        tags: true
