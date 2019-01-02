@@ -22,7 +22,7 @@ extern "C"
 	//Input Mel Features and get the raw probabilities of the labels
 	uint8_t*RunRawDetection(AudioRecognitionImpl*impl,const uint8_t* const data,const int mel_length);
 
-	
+
 	void SetSensitivity(AudioRecognitionImpl*impl,float sens);
  	
 	size_t GetInputDataSize(AudioRecognitionImpl*impl);
@@ -40,9 +40,6 @@ extern "C"
 	int signal_to_mel(FeatureExtractor*impl,const int16_t * const pcm, size_t len,uint8_t*result,float gain);
 	
 	size_t get_melcount(FeatureExtractor*impl);
-		
-	void remove_dc_offset(FeatureExtractor*impl,bool value);
-	
 
 }
 

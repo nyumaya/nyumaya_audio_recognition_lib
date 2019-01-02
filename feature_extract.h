@@ -34,9 +34,7 @@ class FeatureExtractor {
 		const float shift;
 		const float window_len;
 
-
 		std::vector<float> hann;
-		bool remove_dc = false;
 		float mel_filters[512/2+1][40];
 };
 
