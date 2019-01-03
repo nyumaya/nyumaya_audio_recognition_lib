@@ -27,6 +27,7 @@ script:
     - cp register.cc ../tensorflow/lite/kernels/
     - ../tensorflow/lite/tools/make/download_dependencies.sh
     - git submodule update --init kissfft/
+    - make -C kissfft testall
     - cmake ./
     - make 
     
