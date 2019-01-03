@@ -212,15 +212,16 @@ int AudioRecognitionImpl::smooth_detection(uint8_t*scores,int size)
 	//Moving window, max 5 elements
 	for (auto& frame : last_frames)
 	{
-		if (frame->size() >= 5){
+		if (frame->size() >= 3){
 			frame->pop_back();
 		}
 	}
 
 
+
 	//exclude index 0 which is _unknown_
 	for(int i = 1 ; i < size; ++i){
-		if(scores[i] >=230 + 25*sensitivity ){
+		if(scores[i] >= 250 + 5*sensitivity ){
 			last_frames[i]->push_front(scores[i]);
 		} else {
 			last_frames[i]->push_front(0);
@@ -244,7 +245,7 @@ int AudioRecognitionImpl::smooth_detection(uint8_t*scores,int size)
 	}
 	
 
-	if(biggest_score >  (1275*sensitivity) && cooldown == 0){
+	if(biggest_score >  (200+555*sensitivity) && cooldown == 0){
 		cooldown = detection_cooldown;
 		last_frames[biggest_score_key]->clear();
 		return biggest_score_key;
