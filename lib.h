@@ -7,7 +7,7 @@ extern "C"
 {
 
 
-	const char* GetVersionString(){return "0.0.3";}
+	const char* GetVersionString(){return "0.3.4";}
 
 	//Audio Recognition
 	AudioRecognitionImpl* create_audio_recognition(const char* modelPath);
