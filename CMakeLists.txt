@@ -54,7 +54,8 @@ Set(SOURCES
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/stderr_reporter.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/string_util.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/util.cc
-
+		${CMAKE_SOURCE_DIR}/../tensorflow/lite/minimal_logging.cc
+		${CMAKE_SOURCE_DIR}/../tensorflow/lite/minimal_logging_default.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/c/c_api_internal.c
 
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/error_reporter.cc
@@ -68,8 +69,8 @@ Set(SOURCES
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/arg_min_max.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/basic_rnn.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/batch_to_space_nd.cc
-		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/bidirectional_sequence_lstm.cc
-		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/bidirectional_sequence_rnn.cc
+		#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/bidirectional_sequence_lstm.cc
+		#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/bidirectional_sequence_rnn.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/cast.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/comparisons.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/concatenation.cc
@@ -92,8 +93,8 @@ Set(SOURCES
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/gemm_support.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/hashtable_lookup.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/kernel_util.cc
-		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/l2norm.cc
-		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/layer_norm_lstm.cc
+		#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/l2norm.cc
+		#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/layer_norm_lstm.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/local_response_norm.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/logical.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/lsh_projection.cc
@@ -110,7 +111,7 @@ Set(SOURCES
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/pow.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/reduce.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/register.cc
-		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/relu1.cc
+		#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/relu1.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/reshape.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/resize_bilinear.cc
 		${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/select.cc
