@@ -50,10 +50,6 @@ int main(){
 		}
 	}
 
-	if(test_failed == true){
-		exit(EXIT_FAILURE); 
-	}
-
 
 	std::cout << std::setprecision (16) << "Log10: " << log10(1e-5) << std::endl;
 	std::cout << std::setprecision (16) << "Log: "   << log(1e-5)   << std::endl;
@@ -61,6 +57,9 @@ int main(){
 	std::cout << "Sizeof Double: " << sizeof(double) << std::endl;
 
 
+	if(test_failed == true){
+		exit(EXIT_FAILURE); 
+	}
 
 
 	std::cout << "Test passed" << std::endl;
