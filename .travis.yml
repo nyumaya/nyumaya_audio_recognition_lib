@@ -29,6 +29,7 @@ script:
     - git submodule update --init kissfft/
     - cmake ./
     - make 
+    - ./test
     
 deploy:
     provider: releases
