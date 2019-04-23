@@ -2,6 +2,8 @@
 #include <stdlib.h>  
 #include <iostream>
 #include <math.h> 
+#include <iomanip>
+
 #define PI 3.14159265
 
 #include "lib.h"
@@ -51,6 +53,15 @@ int main(){
 	if(test_failed == true){
 		exit(EXIT_FAILURE); 
 	}
+
+
+	std::cout << std::setprecision (16) << "Log10: " << log10(1e-5) << std::endl;
+	std::cout << std::setprecision (16) << "Log: "   << log(1e-5)   << std::endl;
+	std::cout << "Sizeof Float: " << sizeof(float) << std::endl;
+	std::cout << "Sizeof Double: " << sizeof(double) << std::endl;
+
+
+
 
 	std::cout << "Test passed" << std::endl;
 
