@@ -137,7 +137,6 @@ void FeatureExtractor::create_hanning_window()
 
 void FeatureExtractor::spectrum(const float*const pcm,float*real,float*imag)
 {
-
 	const size_t fft_out_size = (this->nfft/2)+1;
 
 	kiss_fft_cpx fft_result[fft_out_size];
@@ -201,14 +200,14 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 
 		//Power Spectrum
 		for(size_t j=0; j < fft_out_size; ++j){
-			float imag = fft_result[j].i;
-			float real = fft_result[j].r;
+			double imag = fft_result[j].i;
+			double real = fft_result[j].r;
 			power_spectrum[j] = abs(-(imag*-imag) + real*real);
 		}
 		
 		//Apply Mel Scale
 		for(size_t j=0; j < this->melcount; ++j){
-			float sum = 0;
+			double sum = 0;
 			for (size_t k = 0 ; k < fft_out_size; k++){
 				sum += power_spectrum[k] * mel_filters[k][j];
 			}
