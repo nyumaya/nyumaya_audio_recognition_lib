@@ -26,11 +26,11 @@ __author__ = "David Huggins-Daines <dhuggins@cs.cmu.edu>"
 */
 
 
-float mel(float f){
+float mel(const float f){
 	return 2595. * log10(1. + f / 700.);
 }
 
-float melinv(float m){
+float melinv(const float m){
 	return 700. * (pow(10., m / 2595.) - 1.);
 }
 
@@ -58,10 +58,10 @@ size_t FeatureExtractor::get_melcount()
 
 void FeatureExtractor::create_mel_filter()
 {
-	float melmax = mel(this->upperf);
-	float melmin = mel(this->lowerf);
-	float dmelbw = (melmax - melmin) / (this->melcount + 1);
-	float dfreq = this->sample_rate / this->nfft;
+	const float melmax = mel(this->upperf);
+	const float melmin = mel(this->lowerf);
+	const float dmelbw = (melmax - melmin) / (this->melcount + 1);
+	const float dfreq = this->sample_rate / this->nfft;
 
 
 	if (this->upperf > this->sample_rate/2){
@@ -150,7 +150,7 @@ void FeatureExtractor::spectrum(const float*const pcm,float*real,float*imag)
 	}
 }
 
-uint8_t FeatureExtractor::quantize_float(float value)
+uint8_t FeatureExtractor::quantize_float(const float value)
 {
 	//The values 12 and 8 are determined empirically
 	float converted_value = (value + 12) * 8;

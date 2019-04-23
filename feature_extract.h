@@ -19,7 +19,7 @@ class FeatureExtractor {
 		size_t get_melcount();
 		
 	private:
-		uint8_t quantize_float(float value);
+		uint8_t quantize_float(const float value);
 
 		void create_mel_filter();
 		void create_hanning_window();
