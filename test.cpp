@@ -41,6 +41,12 @@ int main(){
 
 	bool test_failed = false;
 
+	std::cout << std::setprecision (16) << "Log10: " << log10(1e-5) << std::endl;
+	std::cout << std::setprecision (16) << "Log: "   << log(1e-5)   << std::endl;
+	std::cout << "Sizeof Float: " << sizeof(float) << std::endl;
+	std::cout << "Sizeof Double: " << sizeof(double) << std::endl;
+
+
 	//Check if result is golden standard
 	for(int i = 0 ; i < res; i++){
 		if(result[i] != reference[i]){
@@ -49,13 +55,6 @@ int main(){
 			test_failed = true;	
 		}
 	}
-
-
-	std::cout << std::setprecision (16) << "Log10: " << log10(1e-5) << std::endl;
-	std::cout << std::setprecision (16) << "Log: "   << log(1e-5)   << std::endl;
-	std::cout << "Sizeof Float: " << sizeof(float) << std::endl;
-	std::cout << "Sizeof Double: " << sizeof(double) << std::endl;
-
 
 	if(test_failed == true){
 		exit(EXIT_FAILURE); 
