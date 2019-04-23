@@ -139,7 +139,7 @@ void FeatureExtractor::create_hanning_window()
 void FeatureExtractor::spectrum(const float*const pcm,float*real,float*imag)
 {
 
-	size_t fft_out_size = (this->nfft/2)+1;
+	const size_t fft_out_size = (this->nfft/2)+1;
 
 	kiss_fft_cpx fft_result[fft_out_size];
 
