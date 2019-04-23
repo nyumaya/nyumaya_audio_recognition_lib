@@ -181,9 +181,11 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 	const size_t number_of_frames = int(len / this->shift);
 	const size_t fft_out_size = (this->nfft/2)+1;
 
+	kiss_fft_cpx fft_result[fft_out_size];
+
 	for(size_t i=0; i < number_of_frames; ++i){
 		const int start = i*this->shift;
-		kiss_fft_cpx fft_result[fft_out_size];
+		
 		float power_spectrum[this->nfft];
 
 
