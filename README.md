@@ -34,7 +34,7 @@ git clone https://github.com/nyumaya/nyumaya_audio_recognition_lib.git
 
 ```
 cd nyumaya_audio_recognition_lib/
-cp register.cc ../tensorflow/lite/kernels/
+git apply --unsafe-paths --directory=../ tflite.patch
 ```
 
 - Download dependencies

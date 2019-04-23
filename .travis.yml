@@ -24,7 +24,7 @@ before_script:
 script: 
     - git clone https://github.com/nyumaya/nyumaya_audio_recognition_lib.git
     - cd nyumaya_audio_recognition_lib/
-    - cp register.cc ../tensorflow/lite/kernels/
+    - git apply --unsafe-paths --directory=../ tflite.patch
     - ../tensorflow/lite/tools/make/download_dependencies.sh
     - git submodule update --init kissfft/
     - cmake ./
