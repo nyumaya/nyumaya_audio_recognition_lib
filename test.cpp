@@ -37,13 +37,19 @@ int main(){
 	int res;
 	res = signal_to_mel(f,test_signal ,test_signal_len,result,gain);
 
+	bool test_failed = false;
+
 	//Check if result is golden standard
 	for(int i = 0 ; i < res; i++){
 		if(result[i] != reference[i]){
-			std::cout << "Feature extraction test failed" << std::endl;
-			exit (EXIT_FAILURE); 
+			std::cout << "Feature extraction test failed at pos " << i << std::endl;
+			std::cout << "Value should be " << (unsigned) reference[i] << " but is " <<  (unsigned) result[i] << std::endl;
+			test_failed = true;	
 		}
+	}
 
+	if(test_failed == true){
+		exit(EXIT_FAILURE); 
 	}
 
 	std::cout << "Test passed" << std::endl;
