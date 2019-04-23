@@ -19,7 +19,7 @@
 ```
 git clone https://github.com/tensorflow/tensorflow.git 
 cd tensorflow
-git checkout 874c6df65cec64b1c36c0d5405a137fe529f9a36 
+git checkout 49372a1c6e4e83f153c740996c88b6bf76ec1abf 
 ```
 
 - Clone this repository within the top folder of the tensorflow repository
