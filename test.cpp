@@ -34,6 +34,8 @@ int main(){
 
 	FeatureExtractor* f = create_feature_extractor();
 
+	print_mel_filter(f);
+
 	int res;
 	res = signal_to_mel(f,test_signal ,test_signal_len,result,gain);
 

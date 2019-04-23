@@ -53,7 +53,17 @@ size_t FeatureExtractor::get_melcount()
 	return melcount;
 }
 
-
+void FeatureExtractor::print_mel_filter()
+{
+	for(size_t i=0; i < (this->nfft/2+1) ; i++){
+		for(size_t j = 0; j < melcount ; j++){
+			if(mel_filters[i][j] != 0){
+				std::cout << i << ":" << j << " " << mel_filters[i][j] << "\t";
+			}
+		}
+		std::cout << std::endl;
+	}
+}
 
 void FeatureExtractor::create_mel_filter()
 {

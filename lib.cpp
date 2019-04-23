@@ -64,6 +64,12 @@ size_t get_melcount(FeatureExtractor*impl){
 }
 
 
+void print_mel_filter(FeatureExtractor*impl){
+	return impl->print_mel_filter();
+
+}
+
+
 
 
 

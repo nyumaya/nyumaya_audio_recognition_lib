@@ -17,6 +17,8 @@ class FeatureExtractor {
 		void spectrum(const float*const pcm,float*real,float*imag);
 		
 		size_t get_melcount();
+
+		void print_mel_filter();
 		
 	private:
 		uint8_t quantize_float(const float value);

@@ -45,6 +45,8 @@ extern "C"
 	
 	size_t get_melcount(FeatureExtractor*impl);
 
+	void print_mel_filter(FeatureExtractor*impl);
+
 }
 
 
