@@ -3,6 +3,10 @@
 
 #include <string>
 
+class AudioRecognitionImpl;
+class FeatureExtractor;
+class SpeakerVerificationImpl;
+
 extern "C"
 {
 
