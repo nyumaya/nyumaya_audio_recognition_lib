@@ -1,8 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>  
 #include <iostream>
-#include <math.h> 
+#include <cmath> 
 #include <iomanip>
+
 
 #define PI 3.14159265
 
@@ -31,7 +30,6 @@ int main(){
 
 	for (int i = 0 ; i < test_signal_len; i++){
 		test_signal[i] =  (1000 * sin (5*i*PI/180)) + (100* cos (10*i*PI/180));
-
 	}
 
 	FeatureExtractor* f = create_feature_extractor();
@@ -45,6 +43,7 @@ int main(){
 	std::cout << std::setprecision (16) << "Log: "   << log(1e-5)   << std::endl;
 	std::cout << "Sizeof Float: " << sizeof(float) << std::endl;
 	std::cout << "Sizeof Double: " << sizeof(double) << std::endl;
+	std::cout << "TestSignal100: " << test_signal[100] << std::endl; 
 
 
 	//Check if result is golden standard
