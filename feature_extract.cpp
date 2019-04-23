@@ -210,14 +210,14 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 
 		//Power Spectrum
 		for(size_t j=0; j < fft_out_size; ++j){
-			double imag = fft_result[j].i;
-			double real = fft_result[j].r;
+			float imag = fft_result[j].i;
+			float real = fft_result[j].r;
 			power_spectrum[j] = abs(-(imag*-imag) + real*real);
 		}
 		
 		//Apply Mel Scale
 		for(size_t j=0; j < this->melcount; ++j){
-			double sum = 0;
+			float sum = 0;
 			for (size_t k = 0 ; k < fft_out_size; k++){
 				sum += power_spectrum[k] * mel_filters[k][j];
 			}

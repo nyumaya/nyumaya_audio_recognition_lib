@@ -34,7 +34,7 @@ int main(){
 
 	FeatureExtractor* f = create_feature_extractor();
 
-	print_mel_filter(f);
+	//print_mel_filter(f);
 
 	int res;
 	res = signal_to_mel(f,test_signal ,test_signal_len,result,gain);
@@ -43,10 +43,10 @@ int main(){
 
 	std::cout << std::setprecision (16) << "Log10: " << log10(1e-5) << std::endl;
 	std::cout << std::setprecision (16) << "Log: "   << log(1e-5)   << std::endl;
-	std::cout << "Sizeof Float: " << sizeof(float) << std::endl;
-	std::cout << "Sizeof Double: " << sizeof(double) << std::endl;
+	std::cout << "Sizeof Float: "  << sizeof(float)    << std::endl;
+	std::cout << "Sizeof Double: " << sizeof(double)   << std::endl;
 	std::cout << "TestSignal100: " << test_signal[100] << std::endl; 
-
+	std::cout << "Sizeof Pointer " << sizeof(void*)    << std::endl;
 
 	//Check if result is golden standard
 	for(int i = 0 ; i < res; i++){
