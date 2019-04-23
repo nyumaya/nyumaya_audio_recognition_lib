@@ -1,11 +1,11 @@
 
 #include "feature_extract.h"
 
-#include <math.h> 
+#include <cmath> 
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-#include <cmath>
+
 /* 
 
 Mel Filter creation is based on Sphinx-III 
@@ -37,7 +37,6 @@ float melinv(const float m){
 FeatureExtractor::FeatureExtractor(size_t nfft,size_t melcount,size_t sample_rate,size_t lowerf , size_t upperf,float window_len,float shift ) :
 	nfft(nfft),melcount(melcount),sample_rate(sample_rate),lowerf(lowerf),upperf(upperf),shift(shift*sample_rate),window_len(window_len)
 {
-
 	this->cfg = kiss_fftr_alloc(this->nfft ,false ,0,0);
 	this->create_hanning_window();
 	this->create_mel_filter();
@@ -77,7 +76,7 @@ void FeatureExtractor::create_mel_filter()
 	}
 	
 	
-	for(size_t i=0; i < (nfft/2+1) ; i++){
+	for(size_t i=0; i < (this->nfft/2+1) ; i++){
 		for(size_t j = 0; j < melcount ; j++){
 			mel_filters[i][j] = 0;
 		}
@@ -166,14 +165,14 @@ uint8_t FeatureExtractor::quantize_float(const float value)
 }
 
 
-int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len, uint8_t*result,float gain)
+int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len, uint8_t*result,const float gain)
 {
 
 	const float convert = (1.0/32768.0)*gain;
 
 	double max = 0;
 
-	for(int i=0; i < len; ++i){
+	for(size_t i=0; i < len; ++i){
 		max += pcm[i];
 	}
 		
