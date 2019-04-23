@@ -27,6 +27,8 @@ Set(BENCHMARK_SOURCES
      	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/testing/init_tensorflow.cc
 )
 
+
+
 Set(SOURCES
 
 
@@ -166,6 +168,8 @@ Set(SOURCES
 add_library(nyumaya SHARED ${SOURCES} lib.cpp AudioRecognitionImpl.cpp SpeakerVerificationImpl.cpp feature_extract.cpp)
 
 add_executable(benchmark  ${SOURCES}  ${BENCHMARK_SOURCES})
+add_executable(test  test.cpp)
+
 
 target_link_libraries(nyumaya Threads::Threads)
 if(APPLE)
@@ -180,6 +184,7 @@ target_link_libraries(benchmark Threads::Threads)
 target_link_libraries(benchmark m)
 target_link_libraries(benchmark z)
 
+target_link_libraries(test nyumaya)
 
 
 target_include_directories(nyumaya
