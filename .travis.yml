@@ -29,7 +29,6 @@ script:
     - cd nyumaya_audio_recognition_lib/
     - git apply --unsafe-paths --directory=../ tflite.patch
     - ../tensorflow/lite/tools/make/download_dependencies.sh
-    - git submodule update --init kissfft/
     - cmake ./
     - make 
     - ./test

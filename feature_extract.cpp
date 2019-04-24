@@ -137,8 +137,6 @@ void FeatureExtractor::create_mel_filter()
 			freq++;
 		}
 	}
-
-
 }
 
 
