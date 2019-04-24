@@ -38,8 +38,6 @@ float melinv(const float m){
 FeatureExtractor::FeatureExtractor(size_t nfft,size_t melcount,size_t sample_rate,size_t lowerf , size_t upperf,float window_len,float shift ) :
 	nfft(nfft),melcount(melcount),sample_rate(sample_rate),lowerf(lowerf),upperf(upperf),shift(shift*sample_rate),window_len(window_len)
 {
-	//this->cfg = kiss_fftr_alloc(this->nfft ,false ,0,0);
-
 	this->cfg  = pffft_new_setup(this->nfft, pffft_transform_t::PFFFT_REAL);
 
 	size_t fft_out_size = (nfft/2)+1;
@@ -55,8 +53,6 @@ FeatureExtractor::~FeatureExtractor()
 {
 	pffft_aligned_free(fft_result);
 	pffft_aligned_free(frame);
-
-	//kiss_fftr_free(this->cfg);
 }
 
 size_t FeatureExtractor::get_melcount()
@@ -205,7 +201,6 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 	float power_spectrum[fft_out_size];
 
 	
-
 	for(size_t i=0; i < number_of_frames; ++i){
 		const int start = i*this->shift;
 		
@@ -223,9 +218,11 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 
 		//Power Spectrum
 		for(size_t j=0; j < fft_out_size*2;j +=2 ){
+
 			float imag = fft_result[j];
 			float real = fft_result[j+1];
-			power_spectrum[j/2] = abs(-(imag*-imag) + real*real);
+
+			power_spectrum[j/2] = std::abs(-(imag*-imag) + real*real);
 		}
 		
 		//Apply Mel Scale
@@ -242,6 +239,12 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 
 	return this->melcount*number_of_frames;
 }
+
+
+
+
+
+
 
 
 
