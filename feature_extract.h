@@ -1,10 +1,9 @@
 #ifndef FEATURE_EXTRACT_H
 #define FEATURE_EXTRACT_H
-
-#include "./kissfft/tools/kiss_fftr.h"
+//#include "./kissfft/tools/kiss_fftr.h"
 #include <cstdint>
 #include <vector>
-
+#include "pffft.h"
 
 class FeatureExtractor {
 
@@ -26,7 +25,8 @@ class FeatureExtractor {
 		void create_mel_filter();
 		void create_hanning_window();
 		
-		kiss_fftr_cfg cfg;
+		//kiss_fftr_cfg cfg;
+		PFFFT_Setup *cfg;
 
 		const size_t nfft;
 		const size_t melcount;

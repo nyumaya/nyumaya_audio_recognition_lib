@@ -2,9 +2,10 @@ cmake_minimum_required (VERSION 2.8.11)
 project (nyumaya)
 
 
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Release)
-set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=x86-64 -mtune=generic -fPIC -Dkiss_fft_scalar=float -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -s")
+set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=x86-64 -mtune=generic -fPIC -funsafe-math-optimizations -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -s")
 
 # PiZero set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -no-pie -funsafe-math-optimizations -s")
 # Pi3    set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -no-pie -funsafe-math-optimizations -mfpu=neon-vfpv4 -DUSE_NEON -s")
@@ -152,8 +153,9 @@ Set(SOURCES
 	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/mfcc.cc
 	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/audio_spectrogram.cc
 	
-	${CMAKE_SOURCE_DIR}/kissfft/kiss_fft.c
-	${CMAKE_SOURCE_DIR}/kissfft/tools/kiss_fftr.c
+	#${CMAKE_SOURCE_DIR}/kissfft/kiss_fft.c
+	#${CMAKE_SOURCE_DIR}/kissfft/tools/kiss_fftr.c
+	${CMAKE_SOURCE_DIR}/pffft.c
 
 )
 

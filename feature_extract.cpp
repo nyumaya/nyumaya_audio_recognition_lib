@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <cstring>
 
 /* 
 
@@ -37,7 +38,10 @@ float melinv(const float m){
 FeatureExtractor::FeatureExtractor(size_t nfft,size_t melcount,size_t sample_rate,size_t lowerf , size_t upperf,float window_len,float shift ) :
 	nfft(nfft),melcount(melcount),sample_rate(sample_rate),lowerf(lowerf),upperf(upperf),shift(shift*sample_rate),window_len(window_len)
 {
-	this->cfg = kiss_fftr_alloc(this->nfft ,false ,0,0);
+	//this->cfg = kiss_fftr_alloc(this->nfft ,false ,0,0);
+
+	this->cfg  = pffft_new_setup(this->nfft, pffft_transform_t::PFFFT_REAL);
+
 	this->create_hanning_window();
 	this->create_mel_filter();
 }
@@ -45,7 +49,7 @@ FeatureExtractor::FeatureExtractor(size_t nfft,size_t melcount,size_t sample_rat
 
 FeatureExtractor::~FeatureExtractor()
 {
-	kiss_fftr_free(this->cfg);
+	//kiss_fftr_free(this->cfg);
 }
 
 size_t FeatureExtractor::get_melcount()
@@ -147,7 +151,7 @@ void FeatureExtractor::create_hanning_window()
 
 void FeatureExtractor::spectrum(const float*const pcm,float*real,float*imag)
 {
-	const size_t fft_out_size = (this->nfft/2)+1;
+	/*const size_t fft_out_size = (this->nfft/2)+1;
 
 	kiss_fft_cpx fft_result[fft_out_size];
 
@@ -155,7 +159,7 @@ void FeatureExtractor::spectrum(const float*const pcm,float*real,float*imag)
 	for (size_t i = 0; i < fft_out_size ; i++){
 		real[i] = fft_result[i].r;
 		imag[i] = fft_result[i].i;
-	}
+	}*/
 }
 
 uint8_t FeatureExtractor::quantize_float(const float value)
@@ -190,7 +194,7 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 	const size_t number_of_frames = int(len / this->shift);
 	const size_t fft_out_size = (this->nfft/2)+1;
 
-	kiss_fft_cpx fft_result[fft_out_size];
+	float fft_result[fft_out_size*2];
 	float power_spectrum[fft_out_size];
 
 	for(size_t i=0; i < number_of_frames; ++i){
@@ -206,13 +210,15 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 			}
 		}
 
-		kiss_fftr(this->cfg,frame,fft_result); 
+		pffft_transform_ordered(this->cfg,frame,fft_result,NULL, pffft_direction_t::PFFFT_FORWARD);
+
+		//kiss_fftr(this->cfg,frame,fft_result); 
 
 		//Power Spectrum
-		for(size_t j=0; j < fft_out_size; ++j){
-			float imag = fft_result[j].i;
-			float real = fft_result[j].r;
-			power_spectrum[j] = abs(-(imag*-imag) + real*real);
+		for(size_t j=0; j < fft_out_size;j +=2 ){
+			float imag = fft_result[j];
+			float real = fft_result[j+1];
+			power_spectrum[j/2] = abs(-(imag*-imag) + real*real);
 		}
 		
 		//Apply Mel Scale
