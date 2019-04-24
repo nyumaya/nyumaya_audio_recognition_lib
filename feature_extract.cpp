@@ -42,6 +42,10 @@ FeatureExtractor::FeatureExtractor(size_t nfft,size_t melcount,size_t sample_rat
 
 	this->cfg  = pffft_new_setup(this->nfft, pffft_transform_t::PFFFT_REAL);
 
+	size_t fft_out_size = (nfft/2)+1;
+	fft_result = (float*) pffft_aligned_malloc(fft_out_size*2 * sizeof(float));
+	frame = (float*) pffft_aligned_malloc(nfft * sizeof(float));
+
 	this->create_hanning_window();
 	this->create_mel_filter();
 }
@@ -49,6 +53,9 @@ FeatureExtractor::FeatureExtractor(size_t nfft,size_t melcount,size_t sample_rat
 
 FeatureExtractor::~FeatureExtractor()
 {
+	pffft_aligned_free(fft_result);
+	pffft_aligned_free(frame);
+
 	//kiss_fftr_free(this->cfg);
 }
 
@@ -178,6 +185,7 @@ uint8_t FeatureExtractor::quantize_float(const float value)
 }
 
 
+
 int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len, uint8_t*result,const float gain)
 {
 
@@ -194,15 +202,16 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 	const size_t number_of_frames = int(len / this->shift);
 	const size_t fft_out_size = (this->nfft/2)+1;
 
-	float fft_result[fft_out_size*2];
 	float power_spectrum[fft_out_size];
+
+	
 
 	for(size_t i=0; i < number_of_frames; ++i){
 		const int start = i*this->shift;
 		
 		//Apply Hanning Window
-		float frame[this->nfft];
-		memset( frame, 0, this->nfft*sizeof(float) );
+
+		memset(frame, 0, this->nfft*sizeof(float) );
 
 		for (size_t pos = 0 ; pos < this->nfft ; ++pos){
 			if(pos+start < len){
@@ -212,10 +221,8 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 
 		pffft_transform_ordered(this->cfg,frame,fft_result,NULL, pffft_direction_t::PFFFT_FORWARD);
 
-		//kiss_fftr(this->cfg,frame,fft_result); 
-
 		//Power Spectrum
-		for(size_t j=0; j < fft_out_size;j +=2 ){
+		for(size_t j=0; j < fft_out_size*2;j +=2 ){
 			float imag = fft_result[j];
 			float real = fft_result[j+1];
 			power_spectrum[j/2] = abs(-(imag*-imag) + real*real);

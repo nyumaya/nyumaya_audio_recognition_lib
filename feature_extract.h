@@ -28,6 +28,9 @@ class FeatureExtractor {
 		//kiss_fftr_cfg cfg;
 		PFFFT_Setup *cfg;
 
+		float *fft_result;
+		float *frame;
+
 		const size_t nfft;
 		const size_t melcount;
 		const size_t sample_rate;
