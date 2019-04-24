@@ -50,7 +50,9 @@ int main(){
 
 	//Check if result is golden standard
 	for(int i = 0 ; i < res; i++){
-		if(result[i] != reference[i]){
+		int diff = result[i]-reference[i];
+
+		if(abs(diff) > 2){
 			std::cout << "Feature extraction test failed at pos " << i << std::endl;
 			std::cout << "Value should be " << (unsigned) reference[i] << " but is " <<  (unsigned) result[i] << std::endl;
 			test_failed = true;	
