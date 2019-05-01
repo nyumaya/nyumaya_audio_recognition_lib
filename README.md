@@ -43,6 +43,12 @@ git apply --unsafe-paths --directory=../ tflite.patch
 ../tensorflow/lite/tools/make/download_dependencies.sh 
 ```
 
+- Modifying CMakeLists.txt for your platform
+
+Depending on your platform (like x86-64 desktop, arm on RPi...) you have to set the correct CXX_FLAGS and C_FLAGS. 
+Examples for x86-64, RPI3 and RPI_0 are given. To use those architectures comment out the default Flags and comment in
+the flags for the chosen platform. The default build is a generic x86-64 version.
+
 
 - Make
 
