@@ -7,6 +7,8 @@
 
 **Warning this is still work in progress, especially the CMake file has a hardcoded target for Linux x86/64. Any other platforms will currently not work out of the box and require some tweaking**
 
+**You don't have to build this library by yourself if you want to run the nyumaya_audio_recognition on the Raspberry Pi
+,macOS or Linux x86-64. There are prebuilt libraries [here](https://github.com/nyumaya/nyumaya_audio_recognition/tree/master/lib).**
 
 ## Depedencies
 -Cmake
