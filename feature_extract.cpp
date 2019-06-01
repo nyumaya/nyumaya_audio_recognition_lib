@@ -99,7 +99,7 @@ void FeatureExtractor::create_mel_filter()
 		}
 	}
 
-	for(size_t i=0; i < this->melcount; ++i){
+	for(size_t i=0; i < this->melcount; i++){
 
 		int leftfr = round(filter_edge[i] / dfreq);
 		int centerfr = round(filter_edge[i + 1] / dfreq);
@@ -187,7 +187,7 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 
 	double max = 0;
 
-	for(size_t i=0; i < len; ++i){
+	for(size_t i=0; i < len; i++){
 		max += pcm[i];
 	}
 		
@@ -199,14 +199,14 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 	float power_spectrum[fft_out_size];
 
 	
-	for(size_t i=0; i < number_of_frames; ++i){
+	for(size_t i=0; i < number_of_frames; i++){
 		const int start = i*this->shift;
 		
 		//Apply Hanning Window
 
 		memset(frame, 0, this->nfft*sizeof(float) );
 
-		for (size_t pos = 0 ; pos < this->nfft ; ++pos){
+		for (size_t pos = 0 ; pos < this->nfft ; pos++){
 			if(pos+start < len){
 				frame[pos] = (pcm[pos+start] - mean) * convert * this->hann[pos];
 			}
@@ -215,18 +215,21 @@ int FeatureExtractor::signal_to_mel(const int16_t * const pcm ,const size_t len,
 		pffft_transform_ordered(this->cfg,frame,fft_result,NULL, pffft_direction_t::PFFFT_FORWARD);
 
 		//Power Spectrum
-		for(size_t j=0; j < fft_out_size*2;j +=2 ){
+		//FIXME: why is the last value (fft_out_size) random?
+		for(size_t j=0; j < (fft_out_size-1)*2;j +=2 ){
 
 			float imag = fft_result[j];
 			float real = fft_result[j+1];
 
+			//std::cout << j << " " << real  << " j" << imag << std::endl;
 			power_spectrum[j/2] = std::abs(-(imag*-imag) + real*real);
 		}
 		
 		//Apply Mel Scale
-		for(size_t j=0; j < this->melcount; ++j){
+		//FIXME: A lot of this calculation is useless. (Zero-Valued mel filters)
+		for(size_t j=0; j < this->melcount; j++){
 			float sum = 0;
-			for (size_t k = 0 ; k < fft_out_size; k++){
+			for (size_t k = 0 ; k < (fft_out_size-1); k++){
 				sum += power_spectrum[k] * mel_filters[k][j];
 			}
 
