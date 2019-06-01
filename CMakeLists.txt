@@ -35,7 +35,9 @@ Set(BENCHMARK_SOURCES
      	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/benchmark/benchmark_params.cc
      	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/benchmark/benchmark_model.cc
      	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/benchmark/benchmark_main.cc
-	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/command_line_flags.cc
+        ${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/command_line_flags.cc
+        ${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/evaluation/utils.cc
+	
 )
 
 
@@ -44,6 +46,7 @@ Set(SOURCES
 
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/profiling/time.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/profiling/profile_summarizer.cc
+
 	${CMAKE_SOURCE_DIR}/../tensorflow/core/util/stats_calculator.cc
 
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/allocation.cc
@@ -54,8 +57,9 @@ Set(SOURCES
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/mmap_allocation_disabled.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/model.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/mutable_op_resolver.cc
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/nnapi_delegate.cc
-	${CMAKE_SOURCE_DIR}/../tensorflow/lite/nnapi_delegate_disabled.cc
+	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/nnapi/nnapi_implementation.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/nnapi/nnapi_implementation_disabled.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/delegates/nnapi/nnapi_delegate_disabled.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/optional_debug_tools.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/simple_memory_arena.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/stderr_reporter.cc
@@ -73,9 +77,16 @@ Set(SOURCES
 
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/activations.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/add.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/round.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/split_v.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/arg_min_max.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/basic_rnn.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/batch_to_space_nd.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/cpu_backend_support.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/cpu_backend_context.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/gemmlowp_support.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/cpu_backend_gemm_eigen.cc
+
 	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/bidirectional_sequence_lstm.cc
 	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/bidirectional_sequence_rnn.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/cast.cc
@@ -83,6 +94,7 @@ Set(SOURCES
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/concatenation.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/conv.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/depthwise_conv.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/quantize.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/dequantize.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/detection_postprocess.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/div.cc
@@ -108,6 +120,29 @@ Set(SOURCES
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/lstm.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/lstm_eval.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/maximum_minimum.cc
+
+	
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/subgraph.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/flatbuffer_conversions.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/op_resolver.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/error_reporter.cc
+
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/allocator.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/block_map.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/blocking_counter.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/context.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/detect_dotprod.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/kernel.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/pack.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/pmu.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/thread_pool.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/trace.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/tune.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/trmul.cc
+
+
+
 
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/mul.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/neg.cc
@@ -150,21 +185,10 @@ Set(SOURCES
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/optimized/neon_tensor_utils.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/make/downloads/farmhash/src/farmhash.cc
-	
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/test_util.cc
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/test_util.cc
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/mfcc.cc
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/mfcc_dct.cc
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/mfcc_dct.h
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/mfcc.h
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/mfcc_mel_filterbank.cc
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/mfcc_mel_filterbank.h
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/spectrogram.cc
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/mfcc.cc
-	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/audio_spectrogram.cc
-	
-	#${CMAKE_SOURCE_DIR}/kissfft/kiss_fft.c
-	#${CMAKE_SOURCE_DIR}/kissfft/tools/kiss_fftr.c
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/make/downloads/flatbuffers/src/util.cpp
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/make/downloads/fft2d/fftsg.c
+
 	${CMAKE_SOURCE_DIR}/pffft.c
 
 )
@@ -179,16 +203,16 @@ add_executable(test  test.cpp)
 
 target_link_libraries(nyumaya Threads::Threads)
 if(APPLE)
-target_link_libraries(nyumaya m -static-libstdc++ )
+target_link_libraries(nyumaya m -static-libstdc++ -latomic)
 else()
-target_link_libraries(nyumaya m -static-libgcc -static-libstdc++ )
+target_link_libraries(nyumaya m -static-libgcc -static-libstdc++ -latomic )
 endif()
 target_link_libraries(nyumaya z)
 
 
 target_link_libraries(benchmark Threads::Threads)
 target_link_libraries(benchmark m)
-target_link_libraries(benchmark z)
+target_link_libraries(benchmark z  -latomic )
 
 target_link_libraries(test nyumaya)
 
@@ -196,7 +220,7 @@ target_link_libraries(test nyumaya)
 target_include_directories(nyumaya
 	PUBLIC ../
 	INTERFACE ../tensorflow/lite/
-	PUBLIC ../tensorflow/lite/tools/make/downloads/flatbuffers/include
+	PUBLIC ../tensorflow/lite/tools/make/downloads/flatbuffers/include/
 	PUBLIC ../tensorflow/lite/tools/make/downloads/eigen
 	PUBLIC ../tensorflow/lite/tools/make/downloads/gemmlowp
 	PUBLIC ../tensorflow/lite/tools/make/downloads/farmhash/src
