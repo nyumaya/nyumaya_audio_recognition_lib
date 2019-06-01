@@ -92,43 +92,6 @@ void AudioRecognitionImpl::PrintDebug()
 
 
 
-void PrintProfilingInfo(const profiling::ProfileEvent* e, uint32_t op_index,
-                        TfLiteRegistration registration) {
-
-	std::cout << (e->end_timestamp_us - e->begin_timestamp_us) / 1000.0 << ", Node " << op_index
-            << ", OpCode " << registration.builtin_code << ", "
-			<< EnumNameBuiltinOperator(static_cast<BuiltinOperator>(registration.builtin_code))<< "\n";
-	std::cout << "PrintProfilingInfo" << std::endl;
-}
-
-void AudioRecognitionImpl::ProfileRun(){
-
-	profiling::Profiler* profiler = new profiling::Profiler();
-	interpreter->SetProfiler(profiler);
-
-	profiler->StartProfiling();
-
-	struct timeval start_time, stop_time;
-	gettimeofday(&start_time, nullptr);
-	for (int i = 0; i < 1000; i++) {
-		if (interpreter->Invoke() != kTfLiteOk) {
-			std::cout << "Failed to invoke tflite!\n";
-		}
-	}
-	gettimeofday(&stop_time, nullptr);
-	std::cout << "invoked \n";
- 	std::cout << "average time: "<< (get_us(stop_time) - get_us(start_time)) / (1000 * 1000) << " ms \n";
-
-	profiler->StopProfiling();
-	auto profile_events = profiler->GetProfileEvents();
-	for (int i = 0; i < profile_events.size(); i++) {
-		auto op_index = profile_events[i]->event_metadata;
-		const auto node_and_registration = interpreter->node_and_registration(op_index);
-		const TfLiteRegistration registration = node_and_registration->second;
-		PrintProfilingInfo(profile_events[i], op_index, registration);
-	}
-}
-
 
 
 void AudioRecognitionImpl::SetThreadCount(size_t val)

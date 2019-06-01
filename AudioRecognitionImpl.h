@@ -35,7 +35,6 @@ class AudioRecognitionImpl {
 
 		void SetThreadCount(size_t val);
 
-		void ProfileRun();
 
 		size_t get_input_data_size();
 		
