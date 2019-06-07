@@ -2,22 +2,25 @@ cmake_minimum_required (VERSION 2.8.11)
 project (nyumaya)
 
 
+option(BUILD_BENCHMARK "Build Benchmark" OFF)
+option(STATIC_CLIB     "Build Static CLib (Compability)" ON)
+
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Release)
-set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=x86-64 -mtune=generic -fPIC -funsafe-math-optimizations -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -s")
+set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=x86-64 -mtune=generic  -DNDEBUG -fPIC -funsafe-math-optimizations -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -s")
 
 
 #Faster build on your own target
-#set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -mtune=native -fPIC -funsafe-math-optimizations -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -s")
+#set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -mtune=native  -DNDEBUG -fPIC -ffast-math -funsafe-math-optimizations -DGEMMLOWP_ALLOW_SLOW_SCALAR_FALLBACK -s")
 
 # PiZero
-#set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -no-pie -funsafe-math-optimizations -s")
-#set(CMAKE_C_FLAGS_RELEASE " -O3 -march=native -no-pie -funsafe-math-optimizations -s -DPFFFT_SIMD_DISABLE")
+#set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -no-pie  -DNDEBUG -funsafe-math-optimizations -s")
+#set(CMAKE_C_FLAGS_RELEASE " -O3 -march=native -no-pie   -DNDEBUG -funsafe-math-optimizations -s -DPFFFT_SIMD_DISABLE")
 
 # Pi3    
-#set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -no-pie -funsafe-math-optimizations -mfpu=neon-vfpv4 -DUSE_NEON -s")
-#set(CMAKE_C_FLAGS_RELEASE " -O3 -march=native -no-pie -funsafe-math-optimizations -mfpu=neon-vfpv4 -DUSE_NEON -s")
+#set(CMAKE_CXX_FLAGS_RELEASE " -O3 -march=native -no-pie  -DNDEBUG -funsafe-math-optimizations -mfpu=neon-vfpv4 -DUSE_NEON -s")
+#set(CMAKE_C_FLAGS_RELEASE " -O3 -march=native -no-pie  -DNDEBUG -funsafe-math-optimizations -mfpu=neon-vfpv4 -DUSE_NEON -s")
 
 
 set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--as-needed -Wl,--gc-sections -Wl,--exclude-libs,ALL -Wl,--no-export-dynamic")
@@ -121,7 +124,6 @@ Set(SOURCES
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/lstm_eval.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/maximum_minimum.cc
 
-	
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/subgraph.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/flatbuffer_conversions.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/op_resolver.cc
@@ -140,8 +142,6 @@ Set(SOURCES
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/trace.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/tune.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/trmul.cc
-
-
 
 
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/mul.cc
@@ -197,7 +197,7 @@ Set(SOURCES
 
 add_library(nyumaya SHARED ${SOURCES} lib.cpp AudioRecognitionImpl.cpp SpeakerVerificationImpl.cpp feature_extract.cpp)
 
-add_executable(benchmark  ${SOURCES}  ${BENCHMARK_SOURCES})
+
 add_executable(test  test.cpp)
 
 
@@ -205,16 +205,22 @@ target_link_libraries(nyumaya Threads::Threads)
 if(APPLE)
 target_link_libraries(nyumaya m -static-libstdc++ -latomic)
 else()
-target_link_libraries(nyumaya m -static-libgcc -static-libstdc++ -latomic )
+	if(STATIC_CLIB)
+		target_link_libraries(nyumaya m -static-libgcc -static-libstdc++ -latomic )
+	else()
+		target_link_libraries(nyumaya m -latomic )
+	endif()
+
 endif()
 target_link_libraries(nyumaya z)
 
 
-target_link_libraries(benchmark Threads::Threads)
-target_link_libraries(benchmark m)
-target_link_libraries(benchmark z  -latomic )
+
 
 target_link_libraries(test nyumaya)
+
+
+
 
 
 target_include_directories(nyumaya
@@ -230,19 +236,25 @@ target_include_directories(nyumaya
 )
 
 
-target_include_directories(benchmark
-	PUBLIC ../
-	PUBLIC ../tensorflow/lite/tools/benchmark/
-	INTERFACE ../tensorflow/lite/
-	PUBLIC ../tensorflow/lite/tools/make/downloads/flatbuffers/include
-	PUBLIC ../tensorflow/lite/tools/make/downloads/eigen
-	PUBLIC ../tensorflow/lite/tools/make/downloads/gemmlowp
-	PUBLIC ../tensorflow/lite/tools/make/downloads/farmhash/src
-	PUBLIC ../tensorflow/lite/tools/make/downloads/neon_2_sse
-	PUBLIC ../tensorflow/lite/tools/make/downloads/absl
-	PUBLIC ./kissfft
-)
+if(BUILD_BENCHMARK)
+	add_executable(benchmark  ${SOURCES}  ${BENCHMARK_SOURCES})
+	target_link_libraries(benchmark Threads::Threads)
+	target_link_libraries(benchmark m)
+	target_link_libraries(benchmark z  -latomic )
 
+	target_include_directories(benchmark
+		PUBLIC ../
+		PUBLIC ../tensorflow/lite/tools/benchmark/
+		INTERFACE ../tensorflow/lite/
+		PUBLIC ../tensorflow/lite/tools/make/downloads/flatbuffers/include
+		PUBLIC ../tensorflow/lite/tools/make/downloads/eigen
+		PUBLIC ../tensorflow/lite/tools/make/downloads/gemmlowp
+		PUBLIC ../tensorflow/lite/tools/make/downloads/farmhash/src
+		PUBLIC ../tensorflow/lite/tools/make/downloads/neon_2_sse
+		PUBLIC ../tensorflow/lite/tools/make/downloads/absl
+		PUBLIC ./kissfft
+	)
+endif(BUILD_BENCHMARK)
 
 
 
