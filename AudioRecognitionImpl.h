@@ -15,7 +15,6 @@
 #include "tensorflow/lite/interpreter.h"
 #include "tensorflow/lite/kernels/register.h"
 #include "tensorflow/lite/model.h"
-#include "tensorflow/lite/optional_debug_tools.h"
 
 class FeatureExtractor;
 
@@ -23,7 +22,7 @@ class AudioRecognitionImpl {
 
 	public:
 
-		AudioRecognitionImpl(const std::string& modelPath);
+		AudioRecognitionImpl();
 
 		~AudioRecognitionImpl();
 
@@ -35,10 +34,11 @@ class AudioRecognitionImpl {
 
 		void SetThreadCount(size_t val);
 
+		int OpenModel(const std::string& modelPath);
+
+		int LoadModelFromBuffer(const char*binaryModel,int len);
 
 		size_t get_input_data_size();
-		
-		void PrintDebug();
 
 
 	private:
@@ -48,15 +48,18 @@ class AudioRecognitionImpl {
 		
 		void test();
 
+		void BuildInterpreter();
+
 		std::unique_ptr<tflite::Interpreter> interpreter;
 		std::unique_ptr<tflite::FlatBufferModel> model;
 		tflite::ops::builtin::BuiltinOpResolver resolver;
+		std::vector<char> buffer;
 
 		int smooth_detection(uint8_t*scores,int size);
 
 		int number_of_threads = 1;
 		bool quantized = false; 
-		FeatureExtractor *f;
+
 		static const size_t melcount = 40;
 		static const size_t melframes = 98;
 		float sensitivity = 0.5;
