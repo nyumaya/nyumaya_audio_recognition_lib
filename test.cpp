@@ -33,10 +33,10 @@ int main(){
 		test_signal[i] =  (1000 * sin (5*i*PI/180)) + (100* cos (10*i*PI/180));
 	}
 
-	FeatureExtractor* f = create_feature_extractor();
+	FeatureExtractor* f = createFeatureExtractor();
 
 	int res;
-	res = signal_to_mel(f,test_signal ,test_signal_len,result,gain);
+	res = signalToMel(f,test_signal ,test_signal_len,result,gain);
 
 	bool test_failed = false;
 
