@@ -1,0 +1,224 @@
+Set(BENCHMARK_SOURCES
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/benchmark/benchmark_tflite_model.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/benchmark/benchmark_params.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/benchmark/benchmark_model.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/benchmark/benchmark_main.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/command_line_flags.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/evaluation/utils.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/profiling/time.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/profiling/profile_summarizer.cc
+)
+
+
+
+
+Set(SOURCES
+
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/core/util/stats_calculator.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/allocation.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/arena_planner.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/graph_info.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/interpreter.cc
+	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/mmap_allocation.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/mmap_allocation_disabled.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/model.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/mutable_op_resolver.cc
+	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/nnapi/nnapi_implementation.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/nnapi/nnapi_implementation_disabled.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/delegates/nnapi/nnapi_delegate_disabled.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/optional_debug_tools.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/simple_memory_arena.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/stderr_reporter.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/string_util.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/util.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/minimal_logging.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/minimal_logging_default.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/c/c_api_internal.c
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/error_reporter.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/flatbuffer_conversions.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/op_resolver.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/subgraph.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/activations.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/add.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/round.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/split_v.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/arg_min_max.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/basic_rnn.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/batch_to_space_nd.cc
+	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/cpu_backend_support.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/cpu_backend_context.cc
+	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/gemmlowp_support.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/cpu_backend_gemm_eigen.cc
+
+	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/bidirectional_sequence_lstm.cc
+	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/bidirectional_sequence_rnn.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/cast.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/comparisons.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/concatenation.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/conv.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/depthwise_conv.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/quantize.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/dequantize.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/detection_postprocess.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/div.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/eigen_support.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/elementwise.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/embedding_lookup.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/embedding_lookup_sparse.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/expand_dims.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/exp.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/fake_quant.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/floor.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/floor_div.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/fully_connected.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/gather.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/hashtable_lookup.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/kernel_util.cc
+	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/l2norm.cc
+	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/layer_norm_lstm.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/local_response_norm.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/logical.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/lsh_projection.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/lstm.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/lstm_eval.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/maximum_minimum.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/subgraph.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/flatbuffer_conversions.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/op_resolver.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/error_reporter.cc
+
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/resource_variable/resource_variable.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/external_cpu_backend_context.cc
+
+
+
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/allocator.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/block_map.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/blocking_counter.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/context.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/detect_dotprod.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/kernel_arm32.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/kernel_arm64.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/kernel_avx512.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/pack_arm.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/pack_avx512.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/pmu.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/thread_pool.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/trace.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/tune.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/trmul.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/wait.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/mul.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/neg.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/one_hot.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/pack.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/pad.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/pooling.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/pow.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/reduce.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/register.cc
+	#${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/relu1.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/reshape.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/resize_bilinear.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/select.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/shape.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/skip_gram.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/slice.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/space_to_batch_nd.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/space_to_depth.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/sparse_to_dense.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/split.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/squeeze.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/strided_slice.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/sub.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/svdf.cc
+
+ 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/optimized/sse_tensor_utils.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/tile.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/topk_v2.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/transpose.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/transpose_conv.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/unidirectional_sequence_lstm.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/bidirectional_sequence_rnn.cc
+			
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/bidirectional_sequence_lstm.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/reverse_sequence.cc
+
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/squared_difference.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/floor_mod.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/fill.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/depth_to_space.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/rank.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/if.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/while.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/ceil.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/matrix_diag.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/gather_nd.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/l2norm.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/mirror_pad.cc
+
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/matrix_set_diag.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/where.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/range.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/reverse.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/unique.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/resize_nearest_neighbor.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/add_n.cc
+
+
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/unidirectional_sequence_rnn.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/unpack.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/zeros_like.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/kernel_utils.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/quantization_util.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/tensor_utils.cc
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/optimized/neon_tensor_utils.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/make/downloads/farmhash/src/farmhash.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/make/downloads/flatbuffers/src/util.cpp
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/tools/make/downloads/fft2d/fftsg.c
+
+	${CMAKE_SOURCE_DIR}/pffft.c
+
+)
+
+Set(TEST_SOURCES
+
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/testing/profile_summarizer.cc
+)
+
+
+Set(INCLUDE_DIRS
+
+	PUBLIC ../
+	INTERFACE ../tensorflow/lite/
+	PUBLIC ../tensorflow/lite/tools/make/downloads/flatbuffers/include/
+	PUBLIC ../tensorflow/lite/tools/make/downloads/eigen
+	PUBLIC ../tensorflow/lite/tools/make/downloads/gemmlowp
+	PUBLIC ../tensorflow/lite/tools/make/downloads/farmhash/src
+	PUBLIC ../tensorflow/lite/tools/make/downloads/neon_2_sse
+	PUBLIC ../tensorflow/lite/tools/make/downloads/absl
+	PUBLIC ./aes
+)
+
