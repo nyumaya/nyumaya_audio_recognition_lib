@@ -28,7 +28,7 @@ before_script:
     - git checkout 51c7df0cfc45d31c2ce2cd61e5c66969d890de2a 
 
 script: 
-    - git clone https://github.com/nyumaya/nyumaya_audio_recognition_lib.git
+    - git clone --branch=V0.3.5 https://github.com/nyumaya/nyumaya_audio_recognition_lib.git 
     - cd nyumaya_audio_recognition_lib/
     - git apply --unsafe-paths --directory=../ tflite.patch
     - ../tensorflow/lite/tools/make/download_dependencies.sh
