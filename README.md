@@ -7,12 +7,11 @@
 
 
 
-**You don't have to build this library by yourself if you want to run the nyumaya_audio_recognition on the Raspberry Pi
-,macOS or Linux x86-64. There are prebuilt libraries [here](https://github.com/nyumaya/nyumaya_audio_recognition/tree/master/lib).**
+**You don't have to build this library by yourself if you want to run the nyumaya_audio_recognition on the Raspberry Pi, macOS or Linux x86-64. There are prebuilt libraries [here](https://github.com/nyumaya/nyumaya_audio_recognition/tree/master/lib).**
 
 ## Depedencies
--Cmake
--Clang-6 compiler (Can be changed in make_all.sh)
+- Cmake
+- Clang-6 compiler (Can be changed in make_all.sh)
 
 
 ## Prerequisite
@@ -20,13 +19,12 @@
 To Build for Android and export Java Bindings for non Android builds, two environment 
 Variables have to be set
 
-export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
-export ANDROID_NDK="/opt/android/android-ndk-r20-linux-x86_64/android-ndk-r20"
+- export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
+- export ANDROID_NDK="/opt/android/android-ndk-r20-linux-x86_64/android-ndk-r20" [Source](https://developer.android.com/ndk/downloads)
 
 For Crosscompiling to Raspberry the build system expects the Raspbian toolchain:
 
-- nyumaya_audio_recognition_lib/toolchains/raspbian-armhf
-- nyumaya_audio_recognition_lib/toolchains/tools
+- nyumaya_audio_recognition_lib/toolchains/tools [GitClone](https://github.com/raspberrypi/tools)
 
 ## How to build the library
 
