@@ -5,13 +5,27 @@
 [![GitHub Release](https://github-basic-badges.herokuapp.com/release/nyumaya/nyumaya_audio_recognition_lib.svg)]()
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/nyumaya_audio_recognition)
 
-**Warning this is still work in progress, especially the CMake file has a hardcoded target for Linux x86/64. Any other platforms will currently not work out of the box and require some tweaking**
+
 
 **You don't have to build this library by yourself if you want to run the nyumaya_audio_recognition on the Raspberry Pi
 ,macOS or Linux x86-64. There are prebuilt libraries [here](https://github.com/nyumaya/nyumaya_audio_recognition/tree/master/lib).**
 
 ## Depedencies
 -Cmake
+
+
+## Prerequisite
+
+To Build for Android and export Java Bindings for non Android builds, two environment 
+Variables have to be set
+
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
+export ANDROID_NDK="/opt/android/android-ndk-r20-linux-x86_64/android-ndk-r20"
+
+For Crosscompiling to Raspberry the build system expects the Raspbian toolchain:
+
+- nyumaya_audio_recognition_lib/toolchains/raspbian-armhf
+- nyumaya_audio_recognition_lib/toolchains/tools
 
 ## How to build the library
 
@@ -45,21 +59,10 @@ git apply --unsafe-paths --directory=../ tflite.patch
 ../tensorflow/lite/tools/make/download_dependencies.sh 
 ```
 
-- Modifying CMakeLists.txt for your platform
-
-Depending on your platform (like x86-64 desktop, arm on RPi...) you have to set the correct CXX_FLAGS and C_FLAGS. 
-Examples for x86-64, RPI3 and RPI_0 are given. To use those architectures comment out the default Flags and comment in
-the flags for the chosen platform. The default build is a generic x86-64 version.
-
 
 - Make
 
 ```
-cmake ./
-make 
+bash make_all.sh
 ```
 
-## Credits
-
-
-- The library uses [https://github.com/mborgerding/kissfft](kissfft)
