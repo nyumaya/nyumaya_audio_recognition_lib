@@ -12,6 +12,7 @@
 
 ## Depedencies
 -Cmake
+-Clang-6 compiler (Can be changed in make_all.sh)
 
 
 ## Prerequisite
@@ -35,7 +36,7 @@ For Crosscompiling to Raspberry the build system expects the Raspbian toolchain:
 ```
 git clone https://github.com/tensorflow/tensorflow.git 
 cd tensorflow
-git checkout 270305c6d5ddded1295c7cf7d05891b119af52c0 
+git checkout 51c7df0cfc45d31c2ce2cd61e5c66969d890de2a 
 ```
 
 - Clone this repository within the top folder of the tensorflow repository
