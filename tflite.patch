@@ -1,8 +1,8 @@
 diff --git a/tensorflow/lite/kernels/register.cc b/tensorflow/lite/kernels/register.cc
-index d9790e4ebb..11633c5513 100644
+index c09525ff74..76a7cd085f 100644
 --- a/tensorflow/lite/kernels/register.cc
 +++ b/tensorflow/lite/kernels/register.cc
-@@ -22,9 +22,9 @@ namespace ops {
+@@ -20,9 +20,9 @@ namespace ops {
  
  namespace custom {
  
@@ -15,227 +15,33 @@ index d9790e4ebb..11633c5513 100644
  TfLiteRegistration* Register_IF();
  TfLiteRegistration* Register_WHILE();
  
-@@ -43,10 +43,10 @@ TfLiteRegistration* Register_MAX_POOL_2D();
- TfLiteRegistration* Register_L2_POOL_2D();
- TfLiteRegistration* Register_CONV_2D();
- TfLiteRegistration* Register_DEPTHWISE_CONV_2D();
--TfLiteRegistration* Register_SVDF();
--TfLiteRegistration* Register_RNN();
--TfLiteRegistration* Register_BIDIRECTIONAL_SEQUENCE_RNN();
--TfLiteRegistration* Register_UNIDIRECTIONAL_SEQUENCE_RNN();
-+//TfLiteRegistration* Register_SVDF();
-+//TfLiteRegistration* Register_RNN();
-+//TfLiteRegistration* Register_BIDIRECTIONAL_SEQUENCE_RNN();
-+//TfLiteRegistration* Register_UNIDIRECTIONAL_SEQUENCE_RNN();
- TfLiteRegistration* Register_EMBEDDING_LOOKUP();
- TfLiteRegistration* Register_EMBEDDING_LOOKUP_SPARSE();
- TfLiteRegistration* Register_FULLY_CONNECTED();
-@@ -62,9 +62,9 @@ TfLiteRegistration* Register_BATCH_TO_SPACE_ND();
- TfLiteRegistration* Register_MUL();
- TfLiteRegistration* Register_L2_NORMALIZATION();
- TfLiteRegistration* Register_LOCAL_RESPONSE_NORMALIZATION();
--TfLiteRegistration* Register_LSTM();
--TfLiteRegistration* Register_BIDIRECTIONAL_SEQUENCE_LSTM();
--TfLiteRegistration* Register_UNIDIRECTIONAL_SEQUENCE_LSTM();
-+//TfLiteRegistration* Register_LSTM();
-+//TfLiteRegistration* Register_BIDIRECTIONAL_SEQUENCE_LSTM();
-+//TfLiteRegistration* Register_UNIDIRECTIONAL_SEQUENCE_LSTM();
- TfLiteRegistration* Register_PAD();
- TfLiteRegistration* Register_PADV2();
- TfLiteRegistration* Register_RESHAPE();
-@@ -95,7 +95,7 @@ TfLiteRegistration* Register_GREATER_EQUAL();
- TfLiteRegistration* Register_LESS();
- TfLiteRegistration* Register_LESS_EQUAL();
- TfLiteRegistration* Register_FLOOR();
--TfLiteRegistration* Register_CEIL();
-+//TfLiteRegistration* Register_CEIL();
- TfLiteRegistration* Register_ROUND();
- TfLiteRegistration* Register_TILE();
- TfLiteRegistration* Register_NEG();
-@@ -116,7 +116,7 @@ TfLiteRegistration* Register_NOT_EQUAL();
- TfLiteRegistration* Register_SQRT();
- TfLiteRegistration* Register_RSQRT();
- TfLiteRegistration* Register_SHAPE();
--TfLiteRegistration* Register_RANK();
-+//TfLiteRegistration* Register_RANK();
- TfLiteRegistration* Register_POW();
- TfLiteRegistration* Register_FAKE_QUANT();
- TfLiteRegistration* Register_PACK();
-@@ -128,22 +128,22 @@ TfLiteRegistration* Register_UNPACK();
- TfLiteRegistration* Register_FLOOR_DIV();
- TfLiteRegistration* Register_SQUARE();
- TfLiteRegistration* Register_ZEROS_LIKE();
--TfLiteRegistration* Register_FLOOR_MOD();
--TfLiteRegistration* Register_RANGE();
-+//TfLiteRegistration* Register_FLOOR_MOD();
-+//TfLiteRegistration* Register_RANGE();
- TfLiteRegistration* Register_LEAKY_RELU();
- TfLiteRegistration* Register_SQUARED_DIFFERENCE();
- TfLiteRegistration* Register_FILL();
- TfLiteRegistration* Register_MIRROR_PAD();
- TfLiteRegistration* Register_UNIQUE();
- TfLiteRegistration* Register_REVERSE_V2();
--TfLiteRegistration* Register_ADD_N();
-+//TfLiteRegistration* Register_ADD_N();
- TfLiteRegistration* Register_GATHER_ND();
- TfLiteRegistration* Register_WHERE();
- TfLiteRegistration* Register_ELU();
--TfLiteRegistration* Register_REVERSE_SEQUENCE();
--TfLiteRegistration* Register_MATRIX_DIAG();
-+//TfLiteRegistration* Register_REVERSE_SEQUENCE();
-+//TfLiteRegistration* Register_MATRIX_DIAG();
+@@ -144,8 +144,8 @@ TfLiteRegistration* Register_MATRIX_DIAG();
  TfLiteRegistration* Register_QUANTIZE();
--TfLiteRegistration* Register_MATRIX_SET_DIAG();
-+//TfLiteRegistration* Register_MATRIX_SET_DIAG();
+ TfLiteRegistration* Register_MATRIX_SET_DIAG();
+ TfLiteRegistration* Register_HARD_SWISH();
+-TfLiteRegistration* Register_NON_MAX_SUPPRESSION_V4();
+-TfLiteRegistration* Register_NON_MAX_SUPPRESSION_V5();
++//TfLiteRegistration* Register_NON_MAX_SUPPRESSION_V4();
++//TfLiteRegistration* Register_NON_MAX_SUPPRESSION_V5();
  
- TfLiteStatus UnsupportedTensorFlowOp(TfLiteContext* context, TfLiteNode* node) {
-   context->ReportError(
-@@ -196,20 +196,20 @@ BuiltinOpResolver::BuiltinOpResolver() {
-   AddBuiltin(BuiltinOperator_DEPTHWISE_CONV_2D, Register_DEPTHWISE_CONV_2D(),
-              /* min_version */ 1,
-              /* max_version */ 3);
--  AddBuiltin(BuiltinOperator_SVDF, Register_SVDF(),
--             /* min_version */ 1,
--             /* max_version */ 2);
--  AddBuiltin(BuiltinOperator_RNN, Register_RNN(),
--             /* min_version */ 1,
--             /* max_version */ 2);
--  AddBuiltin(BuiltinOperator_BIDIRECTIONAL_SEQUENCE_RNN,
--             Register_BIDIRECTIONAL_SEQUENCE_RNN(),
--             /* min_version */ 1,
--             /* max_version */ 2);
--  AddBuiltin(BuiltinOperator_UNIDIRECTIONAL_SEQUENCE_RNN,
--             Register_UNIDIRECTIONAL_SEQUENCE_RNN(),
--             /* min_version */ 1,
--             /* max_version */ 2);
-+  //AddBuiltin(BuiltinOperator_SVDF, Register_SVDF(),
-+             /* min_version */ //1,
-+             /* max_version */ //2);
-+  //AddBuiltin(BuiltinOperator_RNN, Register_RNN(),
-+             /* min_version */ //1,
-+             /* max_version */ //2);
-+  //AddBuiltin(BuiltinOperator_BIDIRECTIONAL_SEQUENCE_RNN,
-+  //           Register_BIDIRECTIONAL_SEQUENCE_RNN(),
-+             /* min_version */ //1,
-+             /* max_version */ //2);
-+  //AddBuiltin(BuiltinOperator_UNIDIRECTIONAL_SEQUENCE_RNN,
-+  //           Register_UNIDIRECTIONAL_SEQUENCE_RNN(),
-+             /* min_version */ //1,
-+             /* max_version */ //2);
-   AddBuiltin(BuiltinOperator_EMBEDDING_LOOKUP, Register_EMBEDDING_LOOKUP(),
-              /* min_version */ 1,
-              /* max_version */ 3);
-@@ -237,19 +237,19 @@ BuiltinOpResolver::BuiltinOpResolver() {
-              /* max_version */ 2);
-   AddBuiltin(BuiltinOperator_MUL, Register_MUL(), /* min_version */ 1,
-              /* max_version */ 2);
--  AddBuiltin(BuiltinOperator_L2_NORMALIZATION, Register_L2_NORMALIZATION(),
--             /* min_version */ 1,
--             /* max_version */ 2);
-+  //AddBuiltin(BuiltinOperator_L2_NORMALIZATION, Register_L2_NORMALIZATION(),
-+             /* min_version */ //1,
-+             /* max_version */ //2);
-   AddBuiltin(BuiltinOperator_LOCAL_RESPONSE_NORMALIZATION,
-              Register_LOCAL_RESPONSE_NORMALIZATION());
--  AddBuiltin(BuiltinOperator_LSTM, Register_LSTM(), /* min_version */ 1,
--             /* max_version */ 3);
--  AddBuiltin(BuiltinOperator_BIDIRECTIONAL_SEQUENCE_LSTM,
--             Register_BIDIRECTIONAL_SEQUENCE_LSTM(), /* min_version */ 1,
--             /* max_version */ 3);
--  AddBuiltin(BuiltinOperator_UNIDIRECTIONAL_SEQUENCE_LSTM,
--             Register_UNIDIRECTIONAL_SEQUENCE_LSTM(), /* min_version */ 1,
--             /* max_version */ 2);
-+  //AddBuiltin(BuiltinOperator_LSTM, Register_LSTM(), /* min_version */ 1,
-+             /* max_version */ //3);
-+  //AddBuiltin(BuiltinOperator_BIDIRECTIONAL_SEQUENCE_LSTM,
-+  //           Register_BIDIRECTIONAL_SEQUENCE_LSTM(), /* min_version */ 1,
-+             /* max_version */ //3);
-+  //AddBuiltin(BuiltinOperator_UNIDIRECTIONAL_SEQUENCE_LSTM,
-+  //           Register_UNIDIRECTIONAL_SEQUENCE_LSTM(), /* min_version */ 1,
-+             /* max_version */ //2);
-   AddBuiltin(BuiltinOperator_PAD, Register_PAD(), /* min_version */ 1,
-              /* max_version */ 2);
-   AddBuiltin(BuiltinOperator_PADV2, Register_PADV2(), /* min_version */ 1,
-@@ -258,10 +258,10 @@ BuiltinOpResolver::BuiltinOpResolver() {
-   AddBuiltin(BuiltinOperator_RESIZE_BILINEAR, Register_RESIZE_BILINEAR(),
+ const TfLiteRegistration* BuiltinOpResolver::FindOp(tflite::BuiltinOperator op,
+                                                     int version) const {
+@@ -384,10 +384,10 @@ BuiltinOpResolver::BuiltinOpResolver() {
               /* min_version */ 1,
               /* max_version */ 2);
--  AddBuiltin(BuiltinOperator_RESIZE_NEAREST_NEIGHBOR,
--             Register_RESIZE_NEAREST_NEIGHBOR(),
--             /* min_version */ 1,
--             /* max_version */ 2);
-+  //AddBuiltin(BuiltinOperator_RESIZE_NEAREST_NEIGHBOR,
-+  //           Register_RESIZE_NEAREST_NEIGHBOR(),
-+             /* min_version */ //1,
-+             /* max_version */ //2);
-   AddBuiltin(BuiltinOperator_SKIP_GRAM, Register_SKIP_GRAM());
-   AddBuiltin(BuiltinOperator_SPACE_TO_DEPTH, Register_SPACE_TO_DEPTH(),
-              /* min_version */ 1,
-@@ -324,7 +324,7 @@ BuiltinOpResolver::BuiltinOpResolver() {
-              /* min_version */ 1,
-              /* max_version */ 2);
-   AddBuiltin(BuiltinOperator_FLOOR, Register_FLOOR());
--  AddBuiltin(BuiltinOperator_CEIL, Register_CEIL());
-+  //AddBuiltin(BuiltinOperator_CEIL, Register_CEIL());
-   AddBuiltin(BuiltinOperator_ROUND, Register_ROUND());
-   AddBuiltin(BuiltinOperator_NEG, Register_NEG());
-   AddBuiltin(BuiltinOperator_SELECT, Register_SELECT(),
-@@ -347,9 +347,9 @@ BuiltinOpResolver::BuiltinOpResolver() {
-              /* max_version */ 2);
-   AddBuiltin(BuiltinOperator_REDUCE_ANY, Register_REDUCE_ANY());
-   AddBuiltin(BuiltinOperator_EXPAND_DIMS, Register_EXPAND_DIMS());
--  AddBuiltin(BuiltinOperator_SPARSE_TO_DENSE, Register_SPARSE_TO_DENSE(),
--             /* min_version */ 1,
--             /* max_version */ 2);
-+  //AddBuiltin(BuiltinOperator_SPARSE_TO_DENSE, Register_SPARSE_TO_DENSE(),
-+             /* min_version */ //1,
-+             /* max_version */ //2);
-   AddBuiltin(BuiltinOperator_EQUAL, Register_EQUAL(),
-              /* min_version */ 1,
-              /* max_version */ 2);
-@@ -359,7 +359,7 @@ BuiltinOpResolver::BuiltinOpResolver() {
-   AddBuiltin(BuiltinOperator_SQRT, Register_SQRT());
-   AddBuiltin(BuiltinOperator_RSQRT, Register_RSQRT());
-   AddBuiltin(BuiltinOperator_SHAPE, Register_SHAPE());
--  AddBuiltin(BuiltinOperator_RANK, Register_RANK());
-+  //AddBuiltin(BuiltinOperator_RANK, Register_RANK());
-   AddBuiltin(BuiltinOperator_POW, Register_POW());
-   AddBuiltin(BuiltinOperator_FAKE_QUANT, Register_FAKE_QUANT(), 1, 2);
-   AddBuiltin(BuiltinOperator_PACK, Register_PACK(),
-@@ -377,34 +377,34 @@ BuiltinOpResolver::BuiltinOpResolver() {
-              /* max_version */ 2);
-   AddBuiltin(BuiltinOperator_SQUARE, Register_SQUARE());
-   AddBuiltin(BuiltinOperator_ZEROS_LIKE, Register_ZEROS_LIKE());
--  AddBuiltin(BuiltinOperator_FLOOR_MOD, Register_FLOOR_MOD());
--  AddBuiltin(BuiltinOperator_RANGE, Register_RANGE());
-+  //AddBuiltin(BuiltinOperator_FLOOR_MOD, Register_FLOOR_MOD());
-+  //AddBuiltin(BuiltinOperator_RANGE, Register_RANGE());
-   AddBuiltin(BuiltinOperator_LEAKY_RELU, Register_LEAKY_RELU());
--  AddBuiltin(BuiltinOperator_SQUARED_DIFFERENCE, Register_SQUARED_DIFFERENCE());
--  AddBuiltin(BuiltinOperator_FILL, Register_FILL());
--  AddBuiltin(BuiltinOperator_MIRROR_PAD, Register_MIRROR_PAD());
--  AddBuiltin(BuiltinOperator_UNIQUE, Register_UNIQUE());
--  AddBuiltin(BuiltinOperator_REVERSE_V2, Register_REVERSE_V2());
--  AddBuiltin(BuiltinOperator_ADD_N, Register_ADD_N());
--  AddBuiltin(BuiltinOperator_GATHER_ND, Register_GATHER_ND());
--  AddBuiltin(BuiltinOperator_WHERE, Register_WHERE());
--  AddBuiltin(BuiltinOperator_ELU, Register_ELU());
--  AddBuiltin(BuiltinOperator_REVERSE_SEQUENCE, Register_REVERSE_SEQUENCE());
--  AddBuiltin(BuiltinOperator_MATRIX_DIAG, Register_MATRIX_DIAG());
-+  //AddBuiltin(BuiltinOperator_SQUARED_DIFFERENCE, Register_SQUARED_DIFFERENCE());
-+  //AddBuiltin(BuiltinOperator_FILL, Register_FILL());
-+  //AddBuiltin(BuiltinOperator_MIRROR_PAD, Register_MIRROR_PAD());
-+  //AddBuiltin(BuiltinOperator_UNIQUE, Register_UNIQUE());
-+  //AddBuiltin(BuiltinOperator_REVERSE_V2, Register_REVERSE_V2());
-+  //AddBuiltin(BuiltinOperator_ADD_N, Register_ADD_N());
-+  //AddBuiltin(BuiltinOperator_GATHER_ND, Register_GATHER_ND());
-+  //AddBuiltin(BuiltinOperator_WHERE, Register_WHERE());
-+  //AddBuiltin(BuiltinOperator_ELU, Register_ELU());
-+  //AddBuiltin(BuiltinOperator_REVERSE_SEQUENCE, Register_REVERSE_SEQUENCE());
-+  //AddBuiltin(BuiltinOperator_MATRIX_DIAG, Register_MATRIX_DIAG());
-   AddBuiltin(BuiltinOperator_QUANTIZE, Register_QUANTIZE());
--  AddBuiltin(BuiltinOperator_MATRIX_SET_DIAG, Register_MATRIX_SET_DIAG());
-+  //AddBuiltin(BuiltinOperator_MATRIX_SET_DIAG, Register_MATRIX_SET_DIAG());
+   AddBuiltin(BuiltinOperator_MATRIX_SET_DIAG, Register_MATRIX_SET_DIAG());
+-  AddBuiltin(BuiltinOperator_NON_MAX_SUPPRESSION_V4,
+-             Register_NON_MAX_SUPPRESSION_V4());
+-  AddBuiltin(BuiltinOperator_NON_MAX_SUPPRESSION_V5,
+-             Register_NON_MAX_SUPPRESSION_V5());
++  //AddBuiltin(BuiltinOperator_NON_MAX_SUPPRESSION_V4,
++  //           Register_NON_MAX_SUPPRESSION_V4());
++  //AddBuiltin(BuiltinOperator_NON_MAX_SUPPRESSION_V5,
++  //           Register_NON_MAX_SUPPRESSION_V5());
+ 
+   // WARNING: Control flow ops are experimental and subject to change.
+   AddBuiltin(BuiltinOperator_IF, tflite::ops::custom::Register_IF());
+@@ -395,11 +395,11 @@ BuiltinOpResolver::BuiltinOpResolver() {
  
    // TODO(andrewharp, ahentz): Move these somewhere more appropriate so that
    // custom ops aren't always included by default.
@@ -249,25 +55,6 @@ index d9790e4ebb..11633c5513 100644
 +  //          tflite::ops::custom::Register_AUDIO_SPECTROGRAM());
 +  //AddCustom("TFLite_Detection_PostProcess",
 +  //          tflite::ops::custom::Register_DETECTION_POSTPROCESS());
- 
-   // WARNING: Control flow ops are experimental and subject to change.
--  AddCustom("Experimental_If", tflite::ops::custom::Register_IF());
--  AddCustom("Experimental_While", tflite::ops::custom::Register_WHILE());
-+  //AddCustom("Experimental_If", tflite::ops::custom::Register_IF());
-+  //AddCustom("Experimental_While", tflite::ops::custom::Register_WHILE());
  }
  
  }  // namespace builtin
-diff --git a/tensorflow/lite/tools/make/download_dependencies.sh b/tensorflow/lite/tools/make/download_dependencies.sh
-index eb002ebb2e..d488349477 100755
---- a/tensorflow/lite/tools/make/download_dependencies.sh
-+++ b/tensorflow/lite/tools/make/download_dependencies.sh
-@@ -29,7 +29,7 @@ if [ ! -f $BZL_FILE_PATH ]; then
-   exit 1;
- fi
- 
--EIGEN_URL="$(grep -o 'http.*bitbucket.org/eigen/eigen/get/.*tar\.gz' "${BZL_FILE_PATH}" | grep -v mirror.bazel | head -n1)"
-+EIGEN_URL="$(grep -o 'https://bitbucket.org/eigen/eigen/get/.*tar\.gz' "${BZL_FILE_PATH}" | grep -v mirror.bazel | head -n1)"
- GEMMLOWP_URL="$(grep -o 'http://mirror.tensorflow.org/github.com/google/gemmlowp/.*zip' "${BZL_FILE_PATH}" | head -n1)"
- GOOGLETEST_URL="https://github.com/google/googletest/archive/release-1.8.0.tar.gz"
- ABSL_URL="$(grep -o 'https://github.com/abseil/abseil-cpp/.*tar.gz' "${BZL_FILE_PATH}" | head -n1)"

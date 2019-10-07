@@ -41,6 +41,9 @@ Set(SOURCES
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/error_reporter.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/flatbuffer_conversions.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/op_resolver.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/api/tensor_utils.cc
+
+
 
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/core/subgraph.cc
 
@@ -106,18 +109,28 @@ Set(SOURCES
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/block_map.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/blocking_counter.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/context.cc
-	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/detect_dotprod.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/detect_arm.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/detect_x86.cc
+
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/kernel_arm32.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/kernel_arm64.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/kernel_avx2.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/kernel_avx512.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/pack_arm.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/pack_avx512.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/pack_avx2.cc
+
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/pmu.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/thread_pool.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/trace.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/tune.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/trmul.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/wait.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/have_built_path_for_avx2.cc
+	${CMAKE_SOURCE_DIR}/../tensorflow/lite/experimental/ruy/have_built_path_for_avx512.cc
+
+
+
 
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/mul.cc
 	${CMAKE_SOURCE_DIR}/../tensorflow/lite/kernels/neg.cc

@@ -25,7 +25,7 @@ matrix:
 before_script:
     - git clone https://github.com/tensorflow/tensorflow.git 
     - cd tensorflow
-    - git checkout 4ca0fd8d3653f82081fb37bdee3ffae2bdfe0427 
+    - git checkout 51c7df0cfc45d31c2ce2cd61e5c66969d890de2a 
 
 script: 
     - git clone https://github.com/nyumaya/nyumaya_audio_recognition_lib.git
