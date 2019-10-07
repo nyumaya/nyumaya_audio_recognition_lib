@@ -7,7 +7,7 @@ option(STATIC_CLIB     "Build Static CLib" ON)
 option(BUILD_LIB       "Build nyumaya lib" ON)
 option(BUILD_TEST      "Build Feature Extraction Tests" ON)
 
-option(STRIP_ANDROID   "Execute Strip Command for Android" ON)
+option(STRIP_ANDROID   "Execute Strip Command for Android" OFF)
 
 
 set(CMAKE_CXX_STANDARD 11)

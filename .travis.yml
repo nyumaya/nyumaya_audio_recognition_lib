@@ -34,6 +34,11 @@ before_script:
 script: 
     - git clone --branch=V0.3.5 https://github.com/nyumaya/nyumaya_audio_recognition_lib.git 
     - cd nyumaya_audio_recognition_lib/
+    - git clone --depth 1 https://github.com/raspberrypi/tools toolchains/tools
+    - wget https://dl.google.com/android/repository/android-ndk-r20-linux-x86_64.zip /opt/
+
+    - export ANDROID_NDK="/opt/android/android-ndk-r20-linux-x86_64/android-ndk-r20"
+    - export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
     - git apply --unsafe-paths --directory=../ tflite.patch
     - ../tensorflow/lite/tools/make/download_dependencies.sh
     - bash make_all.sh
