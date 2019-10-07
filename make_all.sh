@@ -6,11 +6,26 @@ generic_c_flags=" -O3 -DABSL_FLAGS_STRIP_NAMES -DNDEBUG -ffunction-sections -fom
 build_base="release"
 
 
-clean_build=false
+clean_build=true
 debug_build=false
 
-export CC=/usr/bin/clang
-export CXX=/usr/bin/clang++
+
+if [ -x "$(command -v /usr/bin/clang)" ]; then
+	export CC=/usr/bin/clang
+fi
+
+if [ -x "$(command -v /usr/bin/clang)" ]; then
+	export CXX=/usr/bin/clang++
+fi
+
+if [ -x "$(command -v /usr/bin/clang-6.0)" ]; then
+	export CC=/usr/bin/clang-6.0
+fi
+
+if [ -x "$(command -v /usr/bin/clang++-6.0)" ]; then
+	export CXX=/usr/bin/clang++-6.0
+fi
+
 
 if [ "$debug_build" = true ] ; then
 	generic_cxx_flags=" -O0 -g -fPIC  "
