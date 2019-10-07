@@ -5,6 +5,9 @@ matrix:
   include:
     - os: linux
       dist: xenial
+      addons:
+        apt:
+          packages: ['clang-6.0', 'cmake']
 
 #    - os: linux
 #      dist: trusty
@@ -14,6 +17,7 @@ matrix:
 
     - os: osx
       osx_image: xcode10.1
+
 
 #    - os: osx
 #      osx_image: xcode9.4
