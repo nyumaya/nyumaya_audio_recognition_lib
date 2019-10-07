@@ -109,6 +109,7 @@ function build_pi_3 {
 function build_android {
 
 	ABI=$1
+	NEON=$2
 	MINSDKVERSION=21
 
 	build_dir="build/${build_base}/android_${ABI}"
@@ -121,21 +122,30 @@ function build_android {
 
 	export cFlags="${c_flags} -s"
 	export cppFlags="${cxx_flags} -s"
+
+	STRIP=OFF
 	
 	if [ "$debug_build" = true ] ; then
 		BUILD_TYPE=Debug
 	else 
 		BUILD_TYPE=Release
+		STRIP=ON
 	fi
 
 	cmake \
 		-DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake \
 		-DANDROID_ABI=$ABI \
-		-DSTATIC_CLIB=ON -DCMAKE_BUILD_TYPE=${BUILD_TYPE}  \
+		-DSTRIP_ANDROID=${STRIP} \
+		-DSTATIC_CLIB=ON \
+		-DBUILD_TEST=OFF \
+		-DANDROID_ARM_NEON=${NEON} \
+		-DCMAKE_BUILD_TYPE=${BUILD_TYPE}  \
 		-DANDROID_NATIVE_API_LEVEL=$MINSDKVERSION ../../../
 
 
+
 	make  VERBOSE=1
+
 	cd ../../../
 
 }
@@ -144,11 +154,12 @@ build_linux_generic
 build_linux_native
 build_pi_zero
 build_pi_3
-build_android x86
-#build_android armeabi-v7a # pass neon false
-build_android arm64-v8a
-build_android x86_64
-build_android armeabi-v7a with NEON
+build_android "x86" "OFF"
+build_android "arm64-v8a" "ON"
+build_android "x86_64" "OFF"
+build_android "armeabi-v7a with NEON" "ON"
+
+#build_android "armeabi-v7a" "OFF" #NOT WORKING
 
 
 

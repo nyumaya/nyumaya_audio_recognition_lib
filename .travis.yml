@@ -6,14 +6,17 @@ matrix:
     - os: linux
       dist: xenial
 
-    - os: linux
-      dist: trusty
+#    - os: linux
+#      dist: trusty
+
+#    - os: linux
+#      dist: bionic
 
     - os: osx
       osx_image: xcode10.1
 
-    - os: osx
-      osx_image: xcode9.4
+#    - os: osx
+#      osx_image: xcode9.4
 
   allow_failures:
     - os: windows
@@ -22,23 +25,25 @@ matrix:
 before_script:
     - git clone https://github.com/tensorflow/tensorflow.git 
     - cd tensorflow
-    - git checkout 270305c6d5ddded1295c7cf7d05891b119af52c0 
+    - git checkout 4ca0fd8d3653f82081fb37bdee3ffae2bdfe0427 
 
 script: 
     - git clone https://github.com/nyumaya/nyumaya_audio_recognition_lib.git
     - cd nyumaya_audio_recognition_lib/
     - git apply --unsafe-paths --directory=../ tflite.patch
     - ../tensorflow/lite/tools/make/download_dependencies.sh
-    - cmake ./
-    - make 
-    - ./test
+    - bash make_all.sh
+#    - cmake ./
+#    - make 
+#    - ./test
     
 deploy:
     provider: releases
     api_key: $GITHUB_TOKEN
     file_glob: true
-    file: libnyumaya*
+    file: build/release/*/libnyumaya*
     skip_cleanup: true
     draft: true
     on:
         tags: true
+

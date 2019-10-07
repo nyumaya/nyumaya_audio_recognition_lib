@@ -7,7 +7,7 @@ option(STATIC_CLIB     "Build Static CLib" ON)
 option(BUILD_LIB       "Build nyumaya lib" ON)
 option(BUILD_TEST      "Build Feature Extraction Tests" ON)
 
-
+option(STRIP_ANDROID   "Execute Strip Command for Android" ON)
 
 
 set(CMAKE_CXX_STANDARD 11)
@@ -44,6 +44,15 @@ if(BUILD_LIB)
 	target_include_directories(nyumaya ${INCLUDE_DIRS} )
 
 endif(BUILD_LIB)
+
+if(STRIP_ANDROID)
+	add_custom_command(TARGET nyumaya POST_BUILD
+            COMMAND "${ANDROID_TOOLCHAIN_PREFIX}strip" -g -S -d --strip-debug --verbose
+            "libnyumaya.so"
+            COMMENT "Strip debug symbols done on final binary.")
+
+endif(STRIP_ANDROID)
+
 
 if(BUILD_BENCHMARK)
 	add_executable(benchmark  ${SOURCES}  ${BENCHMARK_SOURCES})
