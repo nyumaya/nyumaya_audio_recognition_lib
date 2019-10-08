@@ -31,11 +31,14 @@ jlong Java_com_nyumaya_audiorecognition_NyumayaLibrary_createFeatureExtractor(JN
 jbyteArray Java_com_nyumaya_audiorecognition_NyumayaLibrary_signalToMel(JNIEnv *env, jobject obj,jlong impl,jbyteArray pcm,jfloat gain)
 {
 	FeatureExtractor* f = (FeatureExtractor*) impl;
-	int inlen = env->GetArrayLength(pcm);
-	jbyte *pcm_arr 	= env->GetByteArrayElements(pcm, 0);
+	int inlen = env->GetArrayLength(pcm)/2;
+	jbyte *pcm_arr = env->GetByteArrayElements(pcm, 0);
 
 	//FIXME: Properly get required size
-	uint8_t result[1024];
+	//This depends on the Feature Extractor parameters and is therefore only known
+	//by the feature extractor
+	uint8_t result[2048];
+
 	int outlen = f->signal_to_mel((int16_t *)pcm_arr,inlen,result,gain);
 
 	env->ReleaseByteArrayElements(pcm, pcm_arr, 0);
@@ -73,7 +76,6 @@ jlong Java_com_nyumaya_audiorecognition_NyumayaLibrary_createAudioRecognition(JN
 
 void Java_com_nyumaya_audiorecognition_NyumayaLibrary_setSensitivity(JNIEnv *env, jobject obj,jlong impl,jfloat sensitivity)
 {
-
 	AudioRecognitionImpl* f = (AudioRecognitionImpl*) impl;
 	f->SetSensitivity(sensitivity);
 }
@@ -87,6 +89,24 @@ jint Java_com_nyumaya_audiorecognition_NyumayaLibrary_runDetection(JNIEnv *env, 
 
 	return f->RunDetection((uint8_t*)mels_arr,inlen);
 }
+
+
+JNIEXPORT jbyteArray Java_com_nyumaya_audiorecognition_NyumayaLibrary_runRawDetection(JNIEnv *env, jobject obj,jlong impl,jbyteArray mels)
+{
+	AudioRecognitionImpl* f = (AudioRecognitionImpl*) impl;
+
+	int inlen = env->GetArrayLength(mels);
+	jbyte *mels_arr = env->GetByteArrayElements(mels, 0);
+
+	uint8_t*result= f->RunRawDetection((uint8_t*)mels_arr,inlen);
+	int result_len = 1;
+	//FIXME: Result len is dummy and should be label count.
+	//Need a way to get the label count
+
+
+	return ToJavaByteArray(env,result,result_len);
+}
+
 
 jint Java_com_nyumaya_audiorecognition_NyumayaLibrary_loadModelFromBuffer(JNIEnv *env, jobject obj,jlong impl,jbyteArray modelData){
 	AudioRecognitionImpl* f = (AudioRecognitionImpl*) impl;

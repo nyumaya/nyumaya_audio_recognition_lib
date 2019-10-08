@@ -35,6 +35,8 @@ extern "C"
 
 	JNIEXPORT jint Java_com_nyumaya_audiorecognition_NyumayaLibrary_runDetection(JNIEnv *env, jobject obj,jlong impl,jbyteArray mels);
 
+	JNIEXPORT jbyteArray Java_com_nyumaya_audiorecognition_NyumayaLibrary_runRawDetection(JNIEnv *env, jobject obj,jlong impl,jbyteArray mels);
+
 
 /*	//Audio Recognition
 	
