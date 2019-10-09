@@ -155,9 +155,10 @@ void setSensitivity(AudioRecognitionImpl*impl,float sens)
 
 
 
-int openModel(AudioRecognitionImpl*impl,const std::string& modelPath)
+int openModel(AudioRecognitionImpl*impl,const char* modelPath)
 {
-	impl->OpenModel(modelPath);
+	std::string std_modelPath(modelPath);
+	return impl->OpenModel(std_modelPath);
 }
 
 
