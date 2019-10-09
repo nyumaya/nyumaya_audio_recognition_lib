@@ -14,7 +14,7 @@ extern "C"
 	//Audio Recognition
 	AudioRecognitionImpl* createAudioRecognition() DEFAULT_VIS;
 
-	void deleteAudioRecognition(AudioRecognitionImpl*impl);
+	void deleteAudioRecognition(AudioRecognitionImpl*impl) DEFAULT_VIS;
 	
 	//Open Audio Recognition Model by Filename
 	//@param modelPath: Zero Terminate char array of model filename
@@ -47,7 +47,7 @@ extern "C"
 	FeatureExtractor* createFeatureExtractor(size_t nfft=512,size_t melcount=40,size_t sample_rate=16000,
 	    size_t lowerf=20, size_t upperf=8000,float window_len=0.03,float shift=0.01) DEFAULT_VIS;
 
-	void deleteFeatureExtractor(FeatureExtractor*impl);
+	void deleteFeatureExtractor(FeatureExtractor*impl) DEFAULT_VIS;
 
 	//Extract Mel-Spectrogram Features from PCM Audio Data
 	//@param pcm: Single Channel 16kHZ PCM encoded audio data
