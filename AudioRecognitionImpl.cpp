@@ -101,9 +101,7 @@ void AudioRecognitionImpl::_interpret(const uint8_t* const data,const int mel_le
 	if(mel_length > melcount*melframes){
 		std::cerr << "Invalid size for mel_length: "<< mel_length << std::endl;
 		return;
-	} else {
-		std::cerr << "Mel_length: "<< mel_length << std::endl;
-	}
+	} 
 
 	size_t fs = sizeof(uint8_t);
 	uint8_t tmp[melcount*melframes];
