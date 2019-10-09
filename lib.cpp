@@ -87,7 +87,9 @@ jint Java_com_nyumaya_audiorecognition_NyumayaLibrary_runDetection(JNIEnv *env, 
 	int inlen = env->GetArrayLength(mels);
 	jbyte *mels_arr = env->GetByteArrayElements(mels, 0);
 
-	return f->RunDetection((uint8_t*)mels_arr,inlen);
+	int result =  f->RunDetection((uint8_t*)mels_arr,inlen);
+	env->ReleaseByteArrayElements(mels, mels_arr, 0);
+	return result;
 }
 
 
