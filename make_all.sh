@@ -55,7 +55,7 @@ function build_linux_generic {
 	export CXXFLAGS="${cxx_flags}"
 
 	cmake ../../../
-	make VERBOSE=1
+	make
 	cd ../../../
 }
 
@@ -73,7 +73,7 @@ function build_linux_native {
 	export CXXFLAGS="${cxx_flags}"
 
 	cmake ../../../
-	make VERBOSE=1
+	make
 	cd ../../../
 }
 
@@ -96,7 +96,7 @@ function build_pi_zero {
 	cmake -DCMAKE_TOOLCHAIN_FILE=./boards/raspberry_pi_zero.cmake ../../../ 
 
 
-	make  VERBOSE=1
+	make
 	cd ../../../
 }
 
@@ -115,7 +115,7 @@ function build_pi_3 {
 	export CXXFLAGS="${cxx_flags}"
 
 	cmake -DCMAKE_TOOLCHAIN_FILE=./boards/raspberry_pi_3.cmake ../../../
-	make  VERBOSE=1
+	make
 	cd ../../../
 
 }
@@ -159,7 +159,7 @@ function build_android {
 
 
 
-	make  VERBOSE=1
+	make
 
 	cd ../../../
 
