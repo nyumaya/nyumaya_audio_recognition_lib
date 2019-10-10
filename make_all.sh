@@ -55,7 +55,7 @@ function build_linux_generic {
 	export CXXFLAGS="${cxx_flags}"
 
 	cmake ../../../
-	make
+	make -w
 	cd ../../../
 }
 
@@ -73,7 +73,7 @@ function build_linux_native {
 	export CXXFLAGS="${cxx_flags}"
 
 	cmake ../../../
-	make
+	make -w
 	cd ../../../
 }
 
@@ -96,7 +96,7 @@ function build_pi_zero {
 	cmake -DCMAKE_TOOLCHAIN_FILE=./boards/raspberry_pi_zero.cmake ../../../ 
 
 
-	make
+	make -w
 	cd ../../../
 }
 
@@ -159,7 +159,7 @@ function build_android {
 
 
 
-	make
+	make -w
 
 	cd ../../../
 
